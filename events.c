@@ -18,10 +18,22 @@ This program is free software: you can redistribute it and/or modify
 
 void on_button_1_clicked(GtkButton *b)
 {
-    printf("%s", gtk_button_get_label(b));
+    char tmp[100];
 
-    gtk_text_buffer_set_text(GTK_TEXT_BUFFER(
+    sprintf(tmp, "\n%s", gtk_button_get_label(b));
+
+    gtk_text_buffer_insert_at_cursor(GTK_TEXT_BUFFER(
                         TEXT_BUFFER_BOTTOM_LEFT),
-                        gtk_button_get_label(b),
-                        strlen(gtk_button_get_label(b)));
+                        tmp,
+                        strlen(tmp));
+
+    GtkWidget* newLabel = gtk_label_new(tmp);
+
+    gtk_label_set_text(GTK_LABEL(newLabel),"test row");
+
+    // inserts new row at the end of the list
+    gtk_list_box_insert(GTK_LIST_BOX(LIST_BOTTOM_RIGHT), newLabel, -1);
+
+    // shows the changes in the list
+    gtk_widget_show_all(LIST_BOTTOM_RIGHT);
 }
