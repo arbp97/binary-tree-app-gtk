@@ -26,7 +26,10 @@ This program is free software: you can redistribute it and/or modify
 #include <math.h>
 #include <ctype.h>
 
+// write to console in app
+void console_log(const gchar *text);
+
 /* Create new tree */
-void on_button_1_clicked(GtkButton* b);
+void on_button_1_clicked(GtkButton* b, GtkSpinButton* s);
 
 #endif // !_EVENTS_H_
