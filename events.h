@@ -18,7 +18,9 @@ This program is free software: you can redistribute it and/or modify
 #define _EVENTS_H_
 #pragma once
 
-#include "widgets.h"
+#include "globals.h"
+#include "tree.h"
+#include "list.h"
 #include <sys/types.h>
 #include <signal.h>
 #include <unistd.h>
@@ -32,5 +34,10 @@ void console_log(const gchar *text);
 
 /* Create new tree */
 void on_button_1_clicked(GtkButton* b, GtkSpinButton* s);
+
+/* Inserts new node in selected tree*/
+void on_button_2_clicked(GtkButton* b, GtkSpinButton* s);
+
+void on_list_selected_rows_changed(GtkListBox* l, GtkListBoxRow* r);
 
 #endif // !_EVENTS_H_

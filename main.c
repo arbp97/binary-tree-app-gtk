@@ -41,9 +41,10 @@ GtkWidget *TEXT_VIEW_BOTTOM_LEFT;
 GtkWidget *TEXT_BUFFER_BOTTOM_LEFT;
 GtkBuilder *BUILDER;
 
+List *TREE_LIST;
+
 int main(int argc, char *argv[])
 {
-
 	gtk_init(&argc, &argv); // init Gtk
 
 	//---------------------------------------------------------------------
@@ -100,10 +101,15 @@ int main(int argc, char *argv[])
 	TEXT_BUFFER_BOTTOM_LEFT =
 			GTK_WIDGET(gtk_builder_get_object(BUILDER, "console-text-buffer"));
 
+	// creating b tree list
+	TREE_LIST = create_list();
+
 	gtk_widget_show(MAIN_WINDOW);
 
 	// main loop
 	gtk_main();
+
+	delete_list(&TREE_LIST);
 
 	return EXIT_SUCCESS;
 }

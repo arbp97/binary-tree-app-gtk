@@ -1,4 +1,4 @@
-/* widgets.h
+/* globals.h
 
 This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -13,8 +13,11 @@ This program is free software: you can redistribute it and/or modify
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+#ifndef _GLOBALS_H_
+#define _GLOBALS_H_
 
 #include <gtk/gtk.h>
+#include "list.h"
 #pragma once
 
 // Widgets used all around the program
@@ -42,3 +45,9 @@ extern GtkWidget *LIST_BOTTOM_RIGHT;
 extern GtkWidget *TEXT_VIEW_BOTTOM_LEFT;
 extern GtkWidget *TEXT_BUFFER_BOTTOM_LEFT;
 extern GtkBuilder *BUILDER;
+
+// Lists
+
+extern struct List *TREE_LIST;
+
+#endif // !_GLOBALS_H_

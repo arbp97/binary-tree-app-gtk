@@ -36,11 +36,13 @@ NodeTree* create_node_tree(int data)
 
 /******************************************************************************/
 
-void add_node_tree(Tree** tree, int data)
+NodeTree* add_node_tree(Tree** tree, int data)
 {
 	NodeTree* new_node = create_node_tree(data);
 
 	push_node_tree(&(*tree)->root, &new_node);
+
+	return new_node;
 }
 
 void push_node_tree(NodeTree** root, NodeTree** new_node)
@@ -81,7 +83,7 @@ void push_node_tree(NodeTree** root, NodeTree** new_node)
 	}
 	else
 	{
-		console_log("ERROR: Tree was not created: Node already exists");
+		console_log("ERROR: Node was not created: Node already exists");
 	}
 }
 
@@ -191,6 +193,37 @@ bool pre_order_search(NodeTree** root, int data, bool* result)
 
 	if ((*root)->right && !*result)
 		pre_order_search(&(*root)->right, data, result);
+
+	return result;
+}
+
+Tree* find_tree_list(List** list, int tree_root)
+{
+	NodeList* cursor = create_node_list(NULL); //nodo para recorrer la lista
+
+	Tree* result = NULL;
+	cursor = (*list)->head;
+
+	while (cursor != NULL)
+	{
+		console_log("Busco");
+		result = (Tree*) cursor->data_ptr;
+
+		if (result->root->data == tree_root)
+		{
+			cursor = NULL;
+			console_log("Encuentro");
+		}
+		else
+		{
+			cursor = cursor->next;
+			result = NULL;
+			console_log("Noencuentro");
+		}
+	}
+
+	free(cursor);
+	cursor = NULL;
 
 	return result;
 }

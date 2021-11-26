@@ -51,7 +51,7 @@ NodeTree* create_node_tree(int data);
   Uses search_tree function to insert the data into the
   specificed tree, creating a new node in the process
 */
-void add_node_tree(Tree** tree, int data);
+NodeTree* add_node_tree(Tree** tree, int data);
 
 /*
   Pushes the new node into the correct place in the tree:
@@ -78,10 +78,13 @@ void delete_tree(Tree** tree);
 void post_order_delete(NodeTree** root);
 
 /*
-  Searches for data using pre order algorithm.
+  Searches for data inside a tree using pre order algorithm.
   Used by search_tree function
 */
 bool pre_order_search(NodeTree** root, int data, bool* result);
+
+// finds a tree with the same root
+Tree* find_tree_list(struct List** list, int tree_root);
 
 /******************************************************************************/
 
