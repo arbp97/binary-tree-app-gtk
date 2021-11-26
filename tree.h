@@ -18,53 +18,77 @@ This program is free software: you can redistribute it and/or modify
 #define _TREE_H_
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdbool.h>
 
-typedef struct Node
+typedef struct NodeTree
 {
   int data;
-  struct Node* right;
-  struct Node* left;
-} Node;
+  struct NodeTree* right;
+  struct NodeTree* left;
+} NodeTree;
 
 typedef struct Tree
 {
-  struct Node* root;
+  struct NodeTree* root;
 } Tree;
 
 /******************************************************************************/
 
+/*
+  Creates a new tree, with the specified root
+*/
 Tree* create_tree(int data);
 
-Node* create_node(int data);
+/*
+  Creates a new independent node, with specified data
+*/
+NodeTree* create_node_tree(int data);
 
 /*
-  Utiliza la funcion search para insertar el dato que recibe
-  en el arbol indicado, creando un nuevo nodo
+  Uses search_tree function to insert the data into the
+  specificed tree, creating a new node in the process
 */
-void insert (Tree * tree, int data);
+void add_node_tree(Tree** tree, int data);
 
 /*
-  Busca el lugar indicado para un nuevo nodo en el arbol, segun
-  el valor del root indicado (node), y lo inserta
+  Pushes the new node into the correct place in the tree:
+    less than root (as in the root of any of the nodes),
+    to the left, more than root, to the right
 */
-void push (Node * node, Node * newNode);
+void push_node_tree(NodeTree** root, NodeTree** new_node);
 
 /*
-  Busca el dato indicado en el arbol
+  Searches for the specified data in the tree. returns
+  true if found
 */
-bool search (Tree * tree, int data);
+bool search_tree (Tree** tree, int data);
+
+/*
+  Deletes specified tree and its children
+*/
+void delete_tree(Tree** tree);
+
+/*
+  Deletes all nodes from the root downwards, using
+  post order algorithm
+*/
+void post_order_delete(NodeTree** root);
+
+/*
+  Searches for data using pre order algorithm.
+  Used by search_tree function
+*/
+bool pre_order_search(NodeTree** root, int data, bool* result);
 
 /******************************************************************************/
 
 //Search Operations
 
-void pre_order (Node * root);
+void pre_order(NodeTree** root);
 
-void in_order (Node * root);
+void in_order(NodeTree** root);
 
-bool pre_order_search (Node * root, int data, bool * result);
-
-void post_order (Node * root);
+void post_order(NodeTree** root);
 
 #endif //_TREE_H_
