@@ -45,38 +45,37 @@ void add_node_tree(Tree** tree, int data)
 
 void push_node_tree(NodeTree** root, NodeTree** new_node)
 {
-	/* Si el nuevo nodo es menor que root (node), debemos
-		 colocarlo a la izquierda */
+	/* If the new node is less than root node, then we
+		put it to the left*/
 	if ((*new_node)->data < (*root)->data)
 	{
-		// Si el hijo izquierdo no ha sido seteado...
+		/* If the left node has not been set, then
+			new node occupies it's place*/
 		if (!(*root)->left)
 		{
-			// el nuevo nodo ocupa su lugar
 			(*root)->left = (*new_node);
 		}
 		else
 		{
-			/*
-					Caso contrario, llamamos recursivamente a la funcion
-					para buscar en el subarbol correspondiente
-				*/
+			/* If the left node has been set, then we have to search
+				again, in left node's sub tree */
 			push_node_tree(&(*root)->left, &(*new_node));
 		}
 	}
-	/*
-			Si el nuevo nodo es mayor que root, se debe colocar a la derecha
-		*/
+	/* If the new node is greater than root node, then we
+		put it to the right*/
 	else if ((*new_node)->data > (*root)->data)
 	{
-		// si el hijo derecho no ha sido seteado
+		/* If the right node has not been set, then
+			new node occupies it's place*/
 		if (!(*root)->right)
 		{
-			// se setea con el nuevo nodo
 			(*root)->right = (*new_node);
 		}
 		else
 		{
+			/* If the right node has been set, then we have to search
+				again, in right node's sub tree */
 			push_node_tree(&(*root)->right, &(*new_node));
 		}
 	}
@@ -92,24 +91,24 @@ void push_node_tree(NodeTree** root, NodeTree** new_node)
 void pre_order(NodeTree** root)
 {
 	/*
-		Recorrido en preOrden:
-			1. visita la raiz
-			2. recorre subarbol izquierdo en preOrden
-			3. recorre subarbol derecho en preOrden
+	Pre order algorithm:
+		1. pass through root node
+		2. go over the left sub-tree recursively
+		3. go over the right sub-tree recursively
 	*/
 
-	/*std::cout << "[" << root->data << "], ";*/
+	/*->pass through root<-*/
 
 	/*
-		si el hijo izquierdo del root existe, entonces
-		se recorre el subarbol izquierdo recursivamente
+	If the left node exists, then we go over the left
+	sub-tree recursively
 	*/
 	if ((*root)->left)
 		pre_order(&(*root)->left);
 
 	/*
-		si el hijo derecho del root existe, entonces
-		se recorre el subarbol derecho recursivamente
+	If the right node exists, then we go over the right
+	sub-tree recursively
 	*/
 	if ((*root)->right)
 		pre_order(&(*root)->right);
@@ -118,35 +117,68 @@ void pre_order(NodeTree** root)
 void in_order(NodeTree** root)
 {
 	/*
-		Recorrido en Orden:
-			1. recorre subarbol izquierdo en simetrico
-			2. visita la raiz
-			3. recorre subarbol derecho en simetrico
+	In order algorithm:
+		1. go over the left sub-tree recursively
+		2. pass through root node
+		3. go over the right sub-tree recursively
 	*/
 
-	// si existe hijo izquierdo de root, entramos en su subarbol
+	/*
+	If the left node exists, then we go over the left
+	sub-tree recursively
+	*/
 	if ((*root)->left)
 		in_order(&(*root)->left);
 
-	// si ya no existe un hijo izquierdo, se imprime el root actual,
-	// que seria el hijo izquierdo del root anterior
+	// pass through root
 	printf("[%i], ", (*root)->data);
 
-	// luego de verificar el hijo izquierdo, se pasa por el derecho
-	// hasta llegar al fondo
+	/*
+	If the right node exists, then we go over the right
+	sub-tree recursively
+	*/
 	if ((*root)->right)
 		in_order(&(*root)->right);
 }
 
+void post_order(NodeTree** root)
+{
+	/*
+	Post order algorithm:
+		1. go over the left sub-tree recursively
+		2. go over the right sub-tree recursively
+		3. pass through root node
+	*/
+
+	/*
+	If the left node exists, then we go over the left
+	sub-tree recursively
+	*/
+	if ((*root)->left)
+		post_order(&(*root)->left);
+
+	/*
+	If the right node exists, then we go over the right
+	sub-tree recursively
+	*/
+	if ((*root)->right)
+		post_order(&(*root)->right);
+
+	/*
+	pass through root
+	*/
+	/*std::cout << "[" << root->data << "], ";*/
+}
+
 bool pre_order_search(NodeTree** root, int data, bool* result)
 {
-	/* Si se encuentra el dato, se levanta el flag */
+	/* raises flag if the data is found */
 	if ((*root)->data == data)
 		*result = true;
 
 	/*
-		Si el dato aun no se ha encontrado, sigue recorriendo los
-		subarboles
+	If the data hasn't been found in root and sub trees exist,
+	then we go over them recursively
 	*/
 	if ((*root)->left && !*result)
 		pre_order_search(&(*root)->left, data, result);
@@ -157,39 +189,18 @@ bool pre_order_search(NodeTree** root, int data, bool* result)
 	return result;
 }
 
-void post_order(NodeTree** root)
-{
-	/*
-		Recorrido en postOrden:
-			1.recorre subarbol izquierdo en orden final
-			2. recorre subarbol derecho en orden final
-			3. visita la raiz
-	*/
-
-	// si existe hijo izquierdo de root, entramos en su subarbol
-	if ((*root)->left)
-		post_order(&(*root)->left);
-
-	// luego de verificar el hijo izquierdo, se pasa por el derecho
-	if ((*root)->right)
-		post_order(&(*root)->right);
-
-	/*
-		cuando agotamos las posibilidades, llegando al fondo del arbol,
-		se imprime la raiz
-	*/
-	/*std::cout << "[" << root->data << "], ";*/
-}
-
 void post_order_delete(NodeTree** root)
 {
-	// si existe hijo izquierdo de root, entramos en su subarbol
-	if ((*root)->left)
-		post_order(&(*root)->left);
+	/*
+	Deletes all nodes in a tree recursively, using
+	post order algorithm
+	*/
 
-	// luego de verificar el hijo izquierdo, se pasa por el derecho
+	if ((*root)->left)
+		post_order_delete(&(*root)->left);
+
 	if ((*root)->right)
-		post_order(&(*root)->right);
+		post_order_delete(&(*root)->right);
 
 	free((*root));
 	(*root) = NULL;
@@ -199,10 +210,9 @@ bool search_tree(Tree** tree, int data)
 {
 	bool result = false;
 
-	if (!(*tree)->root)
+	//if (!(*tree)->root)
 		/*std::cout << "\nError: empty tree" << '\n';*/
-
-		pre_order_search(&(*tree)->root, data, &result);
+	pre_order_search(&(*tree)->root, data, &result);
 
 	return result;
 }
