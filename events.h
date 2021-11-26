@@ -16,6 +16,7 @@ This program is free software: you can redistribute it and/or modify
 
 #ifndef _EVENTS_H_
 #define _EVENTS_H_
+#pragma once
 
 #include "widgets.h"
 #include <sys/types.h>

@@ -16,10 +16,12 @@ This program is free software: you can redistribute it and/or modify
 
 #ifndef _LIST_H_
 #define _LIST_H_
+#pragma once
 
 #include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "events.h"
 
 /* Definicion de tipos de datos */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */

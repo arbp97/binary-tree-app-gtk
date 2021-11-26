@@ -16,10 +16,12 @@ This program is free software: you can redistribute it and/or modify
 
 #ifndef _TREE_H_
 #define _TREE_H_
+#pragma once
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include "events.h"
 
 typedef struct NodeTree
 {

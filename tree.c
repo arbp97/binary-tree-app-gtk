@@ -81,8 +81,7 @@ void push_node_tree(NodeTree** root, NodeTree** new_node)
 	}
 	else
 	{
-		/*std::cout << "Node not created: " << new_node->data
-			<< " Node already exists..." << std::endl;*/
+		console_log("ERROR: Tree was not created: Node already exists");
 	}
 }
 
@@ -98,6 +97,9 @@ void pre_order(NodeTree** root)
 	*/
 
 	/*->pass through root<-*/
+	char tmp[16];
+	sprintf(tmp,"[%i] ",(*root)->data);
+	console_log(tmp);
 
 	/*
 	If the left node exists, then we go over the left
@@ -131,7 +133,9 @@ void in_order(NodeTree** root)
 		in_order(&(*root)->left);
 
 	// pass through root
-	printf("[%i], ", (*root)->data);
+	char tmp[16];
+	sprintf(tmp,"[%i] ",(*root)->data);
+	console_log(tmp);
 
 	/*
 	If the right node exists, then we go over the right
@@ -167,7 +171,9 @@ void post_order(NodeTree** root)
 	/*
 	pass through root
 	*/
-	/*std::cout << "[" << root->data << "], ";*/
+	char tmp[16];
+	sprintf(tmp,"[%i] ",(*root)->data);
+	console_log(tmp);
 }
 
 bool pre_order_search(NodeTree** root, int data, bool* result)

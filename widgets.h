@@ -15,6 +15,7 @@ This program is free software: you can redistribute it and/or modify
 */
 
 #include <gtk/gtk.h>
+#pragma once
 
 // Widgets used all around the program
 
