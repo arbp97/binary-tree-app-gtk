@@ -39,14 +39,16 @@ This program is free software: you can redistribute it and/or modify
     <property name="page-increment">10</property>
   </object>
   <object class="GtkTextBuffer" id="console-text-buffer">
-    <property name="text" translatable="yes">Work in progess</property>
+    <property name="text" translatable="yes">WORK IN PROGRESS
+</property>
   </object>
   <object class="GtkWindow" id="main-window">
     <property name="can-focus">False</property>
-    <property name="title" translatable="yes">Binary Tree View</property>
+    <property name="title" translatable="yes">BTree View</property>
     <property name="resizable">False</property>
     <property name="default-width">1000</property>
     <property name="default-height">600</property>
+    <property name="icon">res/tree_ico_128.png</property>
     <child>
       <object class="GtkFlowBox" id="main-container">
         <property name="visible">True</property>
@@ -230,7 +232,9 @@ This program is free software: you can redistribute it and/or modify
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
                     <property name="editable">False</property>
+                    <property name="cursor-visible">False</property>
                     <property name="buffer">console-text-buffer</property>
+                    <property name="accepts-tab">False</property>
                     <property name="input-purpose">terminal</property>
                     <property name="monospace">True</property>
                   </object>
