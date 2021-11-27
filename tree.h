@@ -83,7 +83,9 @@ void post_order_delete(NodeTree** root);
 */
 bool pre_order_search(NodeTree** root, int data, bool* result);
 
-// finds a tree with the same root
+/*
+  finds a tree with the same root
+*/
 Tree* find_tree_list(struct List** list, int tree_root);
 
 /******************************************************************************/

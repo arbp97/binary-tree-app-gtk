@@ -38,6 +38,7 @@ void on_button_1_clicked(GtkButton* b, GtkSpinButton* s);
 /* Inserts new node in selected tree*/
 void on_button_2_clicked(GtkButton* b, GtkSpinButton* s);
 
+/* Logs when the selected tree changes */
 void on_list_selected_rows_changed(GtkListBox* l, GtkListBoxRow* r);
 
 #endif // !_EVENTS_H_

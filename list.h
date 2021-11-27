@@ -49,10 +49,16 @@ typedef struct List
 /* Definicion de primitivas */
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
+/*
+   Returns an empty list
+*/
 List* create_list();
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
+/*
+   Returns a new node with specified data
+*/
 NodeList* create_node_list(Data data_ptr);
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */

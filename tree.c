@@ -83,7 +83,11 @@ void push_node_tree(NodeTree** root, NodeTree** new_node)
 	}
 	else
 	{
-		console_log("ERROR: Node was not created: Node already exists");
+		/* throws an error and de-allocates the node
+			(allocated in add_node_tree()) */
+		printf("ERROR: Node was not pushed: Node already exists");
+		free((*new_node));
+		(*new_node) = NULL;
 	}
 }
 
@@ -199,26 +203,32 @@ bool pre_order_search(NodeTree** root, int data, bool* result)
 
 Tree* find_tree_list(List** list, int tree_root)
 {
-	NodeList* cursor = create_node_list(NULL); //nodo para recorrer la lista
+	//node to go over the list
+	NodeList* cursor = create_node_list(NULL);
 
+	/*
+	result is used to check the current cursor node's
+	data, and to return it when found
+	*/
 	Tree* result = NULL;
 	cursor = (*list)->head;
 
 	while (cursor != NULL)
 	{
-		console_log("Busco");
 		result = (Tree*) cursor->data_ptr;
 
 		if (result->root->data == tree_root)
 		{
 			cursor = NULL;
-			console_log("Encuentro");
 		}
 		else
 		{
 			cursor = cursor->next;
+			/*
+			set result to null in case it's
+			the last loop and data was not found
+			*/
 			result = NULL;
-			console_log("Noencuentro");
 		}
 	}
 
