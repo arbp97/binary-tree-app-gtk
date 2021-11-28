@@ -36,17 +36,17 @@ NodeTree* create_node_tree(int data)
 
 /******************************************************************************/
 
-NodeTree* add_node_tree(Tree** tree, int data)
+bool add_node_tree(Tree** tree, int data)
 {
 	NodeTree* new_node = create_node_tree(data);
 
-	push_node_tree(&(*tree)->root, &new_node);
-
-	return new_node;
+	return push_node_tree(&(*tree)->root, &new_node);
 }
 
-void push_node_tree(NodeTree** root, NodeTree** new_node)
+bool push_node_tree(NodeTree** root, NodeTree** new_node)
 {
+	bool result;
+
 	/* If the new node is less than root node, then we
 		put it to the left*/
 	if ((*new_node)->data < (*root)->data)
@@ -56,12 +56,13 @@ void push_node_tree(NodeTree** root, NodeTree** new_node)
 		if (!(*root)->left)
 		{
 			(*root)->left = (*new_node);
+			result = true;
 		}
 		else
 		{
 			/* If the left node has been set, then we have to search
 				again, in left node's sub tree */
-			push_node_tree(&(*root)->left, &(*new_node));
+			result = push_node_tree(&(*root)->left, &(*new_node));
 		}
 	}
 	/* If the new node is greater than root node, then we
@@ -73,12 +74,13 @@ void push_node_tree(NodeTree** root, NodeTree** new_node)
 		if (!(*root)->right)
 		{
 			(*root)->right = (*new_node);
+			result = true;
 		}
 		else
 		{
 			/* If the right node has been set, then we have to search
 				again, in right node's sub tree */
-			push_node_tree(&(*root)->right, &(*new_node));
+			result = push_node_tree(&(*root)->right, &(*new_node));
 		}
 	}
 	else
@@ -88,7 +90,10 @@ void push_node_tree(NodeTree** root, NodeTree** new_node)
 		printf("ERROR: Node was not pushed: Node already exists");
 		free((*new_node));
 		(*new_node) = NULL;
+		result = false;
 	}
+
+	return result;
 }
 
 /******************************************************************************/
@@ -182,43 +187,46 @@ void post_order(NodeTree** root)
 	console_log(tmp);
 }
 
-bool pre_order_search(NodeTree** root, int data, bool* result)
+NodeTree* pre_order_search(NodeTree** root, int data, NodeTree** result)
 {
 	/* raises flag if the data is found */
 	if ((*root)->data == data)
-		*result = true;
+		(*result) = (*root);
 
 	/*
 	If the data hasn't been found in root and sub trees exist,
 	then we go over them recursively
 	*/
-	if ((*root)->left && !*result)
-		pre_order_search(&(*root)->left, data, result);
+	if ((*root)->left && !(*result))
+		pre_order_search(&(*root)->left, data, &(*result));
 
-	if ((*root)->right && !*result)
-		pre_order_search(&(*root)->right, data, result);
+	if ((*root)->right && !(*result))
+		pre_order_search(&(*root)->right, data, &(*result));
 
-	return result;
+	return (*result);
 }
 
-Tree* find_tree_list(List** list, int tree_root)
+Tree* find_tree_list(struct List** list, int tree_root)
 {
 	//node to go over the list
-	NodeList* cursor = create_node_list(NULL);
+	NodeList* cursor = NULL;
 
 	/*
 	result is used to check the current cursor node's
 	data, and to return it when found
 	*/
 	Tree* result = NULL;
+	NodeTree* result_root = NULL;
 	cursor = (*list)->head;
 
 	while (cursor != NULL)
 	{
 		result = (Tree*) cursor->data_ptr;
+		result_root = result->root;
 
-		if (result->root->data == tree_root)
+		if (result_root->data == tree_root)
 		{
+			/* set cursor to null to exit loop*/
 			cursor = NULL;
 		}
 		else
@@ -231,9 +239,6 @@ Tree* find_tree_list(List** list, int tree_root)
 			result = NULL;
 		}
 	}
-
-	free(cursor);
-	cursor = NULL;
 
 	return result;
 }
@@ -255,13 +260,14 @@ void post_order_delete(NodeTree** root)
 	(*root) = NULL;
 }
 
-bool search_tree(Tree** tree, int data)
+NodeTree* search_tree(Tree** tree, int data)
 {
-	bool result = false;
+	NodeTree* result = NULL;
 
-	//if (!(*tree)->root)
-		/*std::cout << "\nError: empty tree" << '\n';*/
-	pre_order_search(&(*tree)->root, data, &result);
+	if (!(*tree)->root)
+		console_log("ERROR: Empty tree");
+	else
+		pre_order_search(&(*tree)->root, data, &result);
 
 	return result;
 }

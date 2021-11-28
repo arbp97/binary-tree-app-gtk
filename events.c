@@ -37,7 +37,6 @@ void on_button_1_clicked(GtkButton* b, GtkSpinButton* s)
     we check whether a tree with this root
     exists or not
     */
-    printf("llega 1");
     if (find_tree_list(&TREE_LIST, spin_value))
     {
         console_log("ERROR: Tree already exists with that root");
@@ -48,14 +47,13 @@ void on_button_1_clicked(GtkButton* b, GtkSpinButton* s)
         creating a new tree instance with the specified root value,
         adding it to a new node, and adding this node to the
         tree list
-        */printf("llega 2");
-        //getchar();
+        */
         Tree* new_tree = create_tree(spin_value);
-        printf("llega 3");
+
         NodeList* new_node = create_node_list(new_tree);
-        printf("llega 4");
+
         add_node_list(&TREE_LIST, &new_node);
-        printf("llega 5");
+
         /***************************************************/
 
         /*
@@ -85,12 +83,12 @@ void on_button_1_clicked(GtkButton* b, GtkSpinButton* s)
 
         // shows the changes in the list
         gtk_widget_show_all(new_row);
-
     }
 }
 
 void on_button_2_clicked(GtkButton* b, GtkSpinButton* s)
 {
+    int spin_value = gtk_spin_button_get_value(s);
     // get selected tree
     GtkListBoxRow* selected_row =
                     gtk_list_box_get_selected_row(GTK_LIST_BOX(LIST_BOTTOM_RIGHT));
@@ -114,34 +112,11 @@ void on_button_2_clicked(GtkButton* b, GtkSpinButton* s)
         // finally, find the tree with that root
         Tree* selected_tree = find_tree_list(&TREE_LIST, selected_row_tree_root);
 
-        /* tries to a new node IN THE TREE, if the value is < than
-            the root of the tree, then it does not add it */
-        NodeTree* new_node_tree = add_node_tree(&selected_tree, gtk_spin_button_get_value(s));
-        NodeList* new_node = NULL;
-
-        /* if the node was in fact created, then it is put
-            into a new list node and added to the b tree list */
-        if (new_node_tree)
-        {
-            new_node = create_node_list(new_node_tree);
-            //PROBABLE BUG HERE ADDING SECOND TREE TO LIST, IT CRASHES
-            //LATER
-            add_node_list(&TREE_LIST, &new_node);
-
-            NodeList* cursor = create_node_list(NULL);
-            Tree* aux = NULL;
-            cursor = TREE_LIST->head;
-
-            while (cursor != NULL)
-            {
-                aux = (Tree*) cursor->data_ptr;
-                //printf("%i", ((NodeTree*)aux->root)->data);
-
-                cursor = cursor->next;
-            }
-            free(cursor);
-        }
-        else console_log("ERROR: node was not created: node already exists");
+        /*  */
+        if (add_node_tree(&selected_tree, spin_value))
+            console_log("Node Added to tree");
+        else
+            console_log("ERROR: node was not created: node already exists");
 
         in_order(&selected_tree->root);
     }
@@ -158,7 +133,7 @@ void on_list_selected_rows_changed(GtkListBox* l, GtkListBoxRow* r)
     sprintf(tmp, "Tree selected: %s", gtk_label_get_text(GTK_LABEL(label)));
 
     console_log(tmp);
-    
+
     GtkWidget* new_button = gtk_button_new_with_label(gtk_label_get_text(GTK_LABEL(label)));
     gint wx=180, wy=0;
 

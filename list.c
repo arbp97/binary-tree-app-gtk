@@ -50,11 +50,10 @@ void add_node_list(List** list, NodeList** node)
 		 * como cabeza y cola al mismo tiempo. */
 
 		(*list)->head = (*node);
-		(*list)->tail = (*node);
-		if((*list)->head == (*list)->tail) printf("checking");
+		(*list)->tail = (*list)->head;
 	}
 	else
-	{	//MAYBE THE BUG IS IN THESE CHECKS
+	{
 		if((*list)->head == (*list)->tail)
 		{
 			/* si la cola y la cabeza son iguales, hay solo un objeto en la lista.
