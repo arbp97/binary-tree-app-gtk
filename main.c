@@ -42,6 +42,7 @@ GtkWidget *VIEWPORT_BOTTOM_RIGHT;
 GtkWidget *LIST_BOTTOM_RIGHT;
 GtkWidget *TEXT_VIEW_BOTTOM_LEFT;
 GtkWidget *TEXT_BUFFER_BOTTOM_LEFT;
+GtkWidget *TEXT_BUFFER_BUTTON_3;
 GtkBuilder *BUILDER;
 
 List *TREE_LIST;
@@ -109,6 +110,8 @@ int main(int argc, char *argv[])
 			GTK_WIDGET(gtk_builder_get_object(BUILDER, "text-bottom-left"));
 	TEXT_BUFFER_BOTTOM_LEFT =
 			GTK_WIDGET(gtk_builder_get_object(BUILDER, "console-text-buffer"));
+	TEXT_BUFFER_BUTTON_3 =
+			GTK_WIDGET(gtk_builder_get_object(BUILDER, "button-3-buffer"));
 
 	// creating b tree list
 	TREE_LIST = create_list();

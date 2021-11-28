@@ -110,7 +110,7 @@ void pre_order(NodeTree** root)
 	/*->pass through root<-*/
 	char tmp[16];
 	sprintf(tmp,"[%i] ",(*root)->data);
-	console_log(tmp);
+	console_log(tmp,TEXT_BUFFER_BUTTON_3, false);
 
 	/*
 	If the left node exists, then we go over the left
@@ -146,7 +146,7 @@ void in_order(NodeTree** root)
 	// pass through root
 	char tmp[16];
 	sprintf(tmp,"[%i] ",(*root)->data);
-	console_log(tmp);
+	//console_log(tmp,);
 
 	/*
 	If the right node exists, then we go over the right
@@ -184,7 +184,7 @@ void post_order(NodeTree** root)
 	*/
 	char tmp[16];
 	sprintf(tmp,"[%i] ",(*root)->data);
-	console_log(tmp);
+	//console_log(tmp);
 }
 
 NodeTree* pre_order_search(NodeTree** root, int data, NodeTree** result)
@@ -265,7 +265,7 @@ NodeTree* search_tree(Tree** tree, int data)
 	NodeTree* result = NULL;
 
 	if (!(*tree)->root)
-		console_log("ERROR: Empty tree");
+		console_log("ERROR: Empty tree", TEXT_BUFFER_BOTTOM_LEFT, true);
 	else
 		pre_order_search(&(*tree)->root, data, &result);
 

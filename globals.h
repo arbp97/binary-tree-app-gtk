@@ -47,6 +47,7 @@ extern GtkWidget *VIEWPORT_BOTTOM_RIGHT;
 extern GtkWidget *LIST_BOTTOM_RIGHT;
 extern GtkWidget *TEXT_VIEW_BOTTOM_LEFT;
 extern GtkWidget *TEXT_BUFFER_BOTTOM_LEFT;
+extern GtkWidget *TEXT_BUFFER_BUTTON_3;
 extern GtkBuilder *BUILDER;
 
 // Lists

@@ -16,14 +16,15 @@ This program is free software: you can redistribute it and/or modify
 
 #include "events.h"
 
-void console_log(const gchar *text)
+void console_log(const gchar *text, GtkWidget* buffer, bool newline)
 {
     char tmp[strlen(text)+1];
 
-    sprintf(tmp, "\n%s", text);
+    if(newline) sprintf(tmp, "\n%s", text);
+    else sprintf(tmp, "%s", text);
 
     gtk_text_buffer_insert_at_cursor(
-                    GTK_TEXT_BUFFER(TEXT_BUFFER_BOTTOM_LEFT),
+                    GTK_TEXT_BUFFER(buffer),
                     tmp,
                     strlen(tmp));
 }
@@ -39,7 +40,7 @@ void on_button_1_clicked(GtkButton* b, GtkSpinButton* s)
     */
     if (find_tree_list(&TREE_LIST, spin_value))
     {
-        console_log("ERROR: Tree already exists with that root");
+        console_log("ERROR: Tree already exists with that root", TEXT_BUFFER_BOTTOM_LEFT, true);
     }
     else
     {
@@ -63,7 +64,7 @@ void on_button_1_clicked(GtkButton* b, GtkSpinButton* s)
 
         sprintf(tmp, "%i",(int) spin_value);
 
-        console_log("New tree created");
+        console_log("New tree created", TEXT_BUFFER_BOTTOM_LEFT, true);
 
         GtkWidget* new_label = gtk_label_new("label");
 
@@ -97,7 +98,7 @@ void on_button_2_clicked(GtkButton* b, GtkSpinButton* s)
         or if it even exists */
     if(!selected_row)
     {
-        console_log("ERROR: no tree selected");
+        console_log("ERROR: no tree selected", TEXT_BUFFER_BOTTOM_LEFT, true);
     }
     else
     {
@@ -112,29 +113,68 @@ void on_button_2_clicked(GtkButton* b, GtkSpinButton* s)
         // finally, find the tree with that root
         Tree* selected_tree = find_tree_list(&TREE_LIST, selected_row_tree_root);
 
-        /*  */
+        /* Adding the new node to the selected tree */
         if (add_node_tree(&selected_tree, spin_value))
-            console_log("Node Added to tree");
+            console_log("Node Added to tree", TEXT_BUFFER_BOTTOM_LEFT, true);
         else
-            console_log("ERROR: node was not created: node already exists");
-
-        in_order(&selected_tree->root);
+            console_log("ERROR: node was not created: node already exists", TEXT_BUFFER_BOTTOM_LEFT, true);
     }
 
+}
+
+void on_button_3_clicked(GtkButton* b)
+{
+    GtkListBoxRow* selected_row =
+                    gtk_list_box_get_selected_row(GTK_LIST_BOX(LIST_BOTTOM_RIGHT));
+
+    /* checking if the row is actually selected,
+        or if it even exists */
+    if(!selected_row)
+    {
+        console_log("ERROR: no tree selected", TEXT_BUFFER_BOTTOM_LEFT, true);
+    }
+    else
+    {
+        // get child out of the selected row, a label
+        GtkWidget* selected_row_label =
+                    gtk_bin_get_child(GTK_BIN(selected_row));
+
+        // get the tree root out of the label
+        int selected_row_tree_root =
+                    atoi(gtk_label_get_text(GTK_LABEL(selected_row_label)));
+
+        // finally, find the tree with that root
+        Tree* selected_tree = find_tree_list(&TREE_LIST, selected_row_tree_root);
+
+        // iterators to clear the text buffer
+        GtkTextIter start, end;
+
+        // get start and end points of said buffer
+        gtk_text_buffer_get_start_iter(GTK_TEXT_BUFFER(TEXT_BUFFER_BUTTON_3), &start);
+        gtk_text_buffer_get_end_iter(GTK_TEXT_BUFFER(TEXT_BUFFER_BUTTON_3), &end);
+
+        // clears buffer
+        gtk_text_buffer_delete(GTK_TEXT_BUFFER(TEXT_BUFFER_BUTTON_3), &start, &end);
+
+        // prints the tree in pre order
+        pre_order(&selected_tree->root);
+    }
 }
 
 void on_list_selected_rows_changed(GtkListBox* l, GtkListBoxRow* r)
 {
     char tmp[32];
 
-    GtkListBoxRow* row = gtk_list_box_get_selected_row(GTK_LIST_BOX(LIST_BOTTOM_RIGHT));
+    GtkListBoxRow* row =
+                    gtk_list_box_get_selected_row(GTK_LIST_BOX(LIST_BOTTOM_RIGHT));
     GtkWidget* label = gtk_bin_get_child(GTK_BIN(row));
 
     sprintf(tmp, "Tree selected: %s", gtk_label_get_text(GTK_LABEL(label)));
 
-    console_log(tmp);
+    console_log(tmp, TEXT_BUFFER_BOTTOM_LEFT, true);
 
-    GtkWidget* new_button = gtk_button_new_with_label(gtk_label_get_text(GTK_LABEL(label)));
+    GtkWidget* new_button =
+                    gtk_button_new_with_label(gtk_label_get_text(GTK_LABEL(label)));
     gint wx=180, wy=0;
 
     gtk_fixed_put(GTK_FIXED(FIXED_TOP_RIGHT), new_button,wx,wy);
@@ -159,7 +199,7 @@ void on_list_selected_rows_changed(GtkListBox* l, GtkListBoxRow* r)
 
     gtk_fixed_put(GTK_FIXED(FIXED_TOP_RIGHT), new_button2,wx-50,wy+50);
     sprintf(tmp, "x: %i y: %i",(int)wx,(int)wy);
-    console_log(tmp);
+    console_log(tmp, TEXT_BUFFER_BOTTOM_LEFT, true);
 
     gtk_widget_show_all(FIXED_TOP_RIGHT);
 }

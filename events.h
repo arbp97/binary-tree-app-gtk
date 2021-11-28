@@ -30,13 +30,16 @@ This program is free software: you can redistribute it and/or modify
 #include <ctype.h>
 
 // write to console in app
-void console_log(const gchar *text);
+void console_log(const gchar *text, GtkWidget* buffer, bool newline);
 
 /* Create new tree */
 void on_button_1_clicked(GtkButton* b, GtkSpinButton* s);
 
 /* Inserts new node in selected tree*/
 void on_button_2_clicked(GtkButton* b, GtkSpinButton* s);
+
+/* Prints the selected tree in pre order */
+void on_button_3_clicked(GtkButton* b);
 
 /* Logs when the selected tree changes */
 void on_list_selected_rows_changed(GtkListBox* l, GtkListBoxRow* r);
