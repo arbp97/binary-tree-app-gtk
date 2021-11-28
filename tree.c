@@ -18,7 +18,7 @@ This program is free software: you can redistribute it and/or modify
 
 Tree* create_tree(int data)
 {
-	Tree *new = malloc(sizeof(new));
+	Tree *new = malloc(sizeof(Tree));
 	new->root = create_node_tree(data);
 
 	return new;
@@ -26,7 +26,7 @@ Tree* create_tree(int data)
 
 NodeTree* create_node_tree(int data)
 {
-	NodeTree* new = malloc(sizeof(new));
+	NodeTree* new = malloc(sizeof(NodeTree));
 	new->data = data;
 	new->left = NULL;
 	new->right = NULL;

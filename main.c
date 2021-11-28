@@ -24,7 +24,10 @@ GtkWidget *CONTAINER_TOP_RIGHT;
 GtkWidget *CONTAINER_BOTTOM_LEFT;
 GtkWidget *CONTAINER_BOTTOM_RIGHT;
 GtkWidget *SCROLL_WINDOW_TOP_LEFT;
+GtkWidget *SCROLL_WINDOW_TOP_RIGHT;
 GtkWidget *VIEWPORT_TOP_LEFT;
+GtkWidget *VIEWPORT_TOP_RIGHT;
+GtkWidget *FIXED_TOP_RIGHT;
 GtkWidget *GRID_TOP_LEFT;
 GtkWidget *BUTTON_1;
 GtkWidget *BUTTON_2;
@@ -74,8 +77,14 @@ int main(int argc, char *argv[])
 
 	SCROLL_WINDOW_TOP_LEFT =
 			GTK_WIDGET(gtk_builder_get_object(BUILDER, "scrolled-top-left"));
+	SCROLL_WINDOW_TOP_RIGHT =
+			GTK_WIDGET(gtk_builder_get_object(BUILDER, "scrolled-top-right"));
 	VIEWPORT_TOP_LEFT =
 			GTK_WIDGET(gtk_builder_get_object(BUILDER, "view-top-left"));
+	VIEWPORT_TOP_RIGHT =
+			GTK_WIDGET(gtk_builder_get_object(BUILDER, "view-top-right"));
+	FIXED_TOP_RIGHT =
+			GTK_WIDGET(gtk_builder_get_object(BUILDER, "fixed-top-right"));
 	GRID_TOP_LEFT =
 			GTK_WIDGET(gtk_builder_get_object(BUILDER, "grid-top-left"));
 

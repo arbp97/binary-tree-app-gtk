@@ -21,7 +21,7 @@ This program is free software: you can redistribute it and/or modify
 
 List* create_list()
 {
-	List* new = malloc(sizeof(new));
+	List* new = malloc(sizeof(List));
 	new->head = NULL;
 	new->tail = NULL;
 
@@ -32,7 +32,7 @@ List* create_list()
 
 NodeList* create_node_list(Data data_ptr)
 {
-	NodeList* new = malloc(sizeof(new));
+	NodeList* new = malloc(sizeof(NodeList));
 	new->data_ptr = data_ptr;
 	new->next = NULL;
 	new->prev = NULL;
@@ -44,16 +44,17 @@ NodeList* create_node_list(Data data_ptr)
 
 void add_node_list(List** list, NodeList** node)
 {
-	if(is_list_empty(list))
+	if(is_list_empty(&(*list)))
 	{
 		/* Si la lista se encuentra vacia, entonces se agrega el nuevo nodo
 		 * como cabeza y cola al mismo tiempo. */
 
 		(*list)->head = (*node);
 		(*list)->tail = (*node);
+		if((*list)->head == (*list)->tail) printf("checking");
 	}
 	else
-	{
+	{	//MAYBE THE BUG IS IN THESE CHECKS
 		if((*list)->head == (*list)->tail)
 		{
 			/* si la cola y la cabeza son iguales, hay solo un objeto en la lista.
@@ -118,7 +119,7 @@ int length_of_list(List** list)
 void delete_node_list(List** list, NodeList** node_list_ptr)
 {
 	/* Primero se verifica si la lista no esta vacia y el puntero es valido */
-	if((!is_list_empty(list) && ((*node_list_ptr) != NULL)))
+	if((!is_list_empty(&(*list)) && ((*node_list_ptr) != NULL)))
 	{
 		if(((*node_list_ptr) == (*list)->head) && ((*list)->head == (*list)->tail))
 		{
