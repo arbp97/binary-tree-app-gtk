@@ -42,28 +42,28 @@ NodeList* create_node_list(Data data_ptr)
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-void add_node_list(List** list, NodeList** node)
+void add_node_list(List* list, NodeList* node)
 {
-	if(is_list_empty(&(*list)))
+	if(is_list_empty(list))
 	{
 		/* Si la lista se encuentra vacia, entonces se agrega el nuevo nodo
 		 * como cabeza y cola al mismo tiempo. */
 
-		(*list)->head = (*node);
-		(*list)->tail = (*list)->head;
+		list->head = node;
+		list->tail = list->head;
 	}
 	else
 	{
-		if((*list)->head == (*list)->tail)
+		if(list->head == list->tail)
 		{
 			/* si la cola y la cabeza son iguales, hay solo un objeto en la lista.
 			 * Se agrega el nuevo nodo al final de la lista, y se acomodan las
 			 * referencias next y prev: el anterior de la cola es la cabeza, y el
 			 * siguiente de la cabeza es la cola. */
 
-			(*list)->tail = (*node);
-			(*list)->tail->prev = (*list)->head;
-			(*list)->head->next = (*list)->tail;
+			list->tail = node;
+			list->tail->prev = list->head;
+			list->head->next = list->tail;
 		}
 		else
 		{
@@ -72,20 +72,20 @@ void add_node_list(List** list, NodeList** node)
 			 * luego se agrega el nuevo nodo al final de la lista, y por ultimo
 			 * se mueve la referencia a la cola de la lista a este nuevo objeto. */
 
-			 (*node)->prev = (*list)->tail;
-			 (*list)->tail->next = (*node);
-			 (*list)->tail = (*node);
+			 node->prev = list->tail;
+			 list->tail->next = node;
+			 list->tail = node;
 		}
 	}
 }
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-bool is_list_empty(List** list)
+bool is_list_empty(List* list)
 {
 	bool value = true;
 
-	if((*list)->head != NULL)
+	if(list->head != NULL)
 	{
 		value = false;
 	}
@@ -95,10 +95,10 @@ bool is_list_empty(List** list)
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-int length_of_list(List** list)
+int length_of_list(List* list)
 {
 	NodeList* temp = create_node_list(NULL);
-    temp = (*list)->head;
+    temp = list->head;
     int length=0;
 
     while (temp != NULL)
@@ -115,37 +115,37 @@ int length_of_list(List** list)
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-void delete_node_list(List** list, NodeList** node_list_ptr)
+void delete_node_list(List* list, NodeList* node_list_ptr)
 {
 	/* Primero se verifica si la lista no esta vacia y el puntero es valido */
-	if((!is_list_empty(&(*list)) && ((*node_list_ptr) != NULL)))
+	if((!is_list_empty(list) && (node_list_ptr != NULL)))
 	{
-		if(((*node_list_ptr) == (*list)->head) && ((*list)->head == (*list)->tail))
+		if((node_list_ptr == list->head) && (list->head == list->tail))
 		{
 			/* Si el nodo a eliminar es el unico nodo de la lista,
 			 * entonces se igualan a NULL la cabecera y cola de la misma
 			*/
 
-			(*list)->head = NULL;
-			(*list)->tail = NULL;
+			list->head = NULL;
+			list->tail = NULL;
 		}
-		else if((*node_list_ptr) == (*list)->head)
+		else if(node_list_ptr == list->head)
 		{
 			/* Si el nodo a eliminar es el primero de la lista, se asigna como
 			 * primero de la lista al proximo de este. Hecho esto, se limpia
 			 * el puntero al previo nodo de la nueva cabeza (ya que ahora es
 			 * el primero) */
 
-			(*list)->head = (*list)->head->next;
-			(*list)->head->prev = NULL;
+			list->head = list->head->next;
+			list->head->prev = NULL;
 		}
-		else if((*node_list_ptr) == (*list)->tail)
+		else if(node_list_ptr == list->tail)
 		{
 			/* Si el nodo a eliminar es la cola de la lista, entonces se asigna
 			como cola al nodo anterior al actual */
 
-			(*list)->tail = (*list)->tail->prev;
-			(*list)->tail->next = NULL;
+			list->tail = list->tail->prev;
+			list->tail->next = NULL;
 		}
 		else
 		{
@@ -153,40 +153,40 @@ void delete_node_list(List** list, NodeList** node_list_ptr)
 			 * siguiente del ANTERIOR del nodo a eliminar, y se le asigna como
 			 * proximo al nodo SIGUIENTE de dicho nodo a eliminar. */
 
-			(*node_list_ptr)->prev->next = (*node_list_ptr)->next;
+			node_list_ptr->prev->next = node_list_ptr->next;
 		}
 
-		free((*node_list_ptr));
-		(*node_list_ptr) = NULL;
+		free(node_list_ptr);
+		node_list_ptr = NULL;
 	}
 }
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-void delete_list(List** list)
+void delete_list(List* list)
 {
 	NodeList* cursor = create_node_list(NULL); //nodo para recorrer la lista
 
 	/*nodo auxiliar para conseguir el proximo nodo
 	luego de borrar el cursor*/
 	NodeList* auxPtr = create_node_list(NULL);
-	cursor = (*list)->head;
+	cursor = list->head;
 
 	while (cursor != NULL)
 	{
 		auxPtr = cursor->next;
 
-		delete_node_list(&(*list), &cursor);
+		delete_node_list(list, cursor);
 
 		cursor = auxPtr;
 	}
 
 	free(cursor);
 	free(auxPtr);
-	free((*list));
+	free(list);
 	cursor = NULL;
 	auxPtr = NULL;
-	(*list) = NULL;
+	list = NULL;
 }
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */

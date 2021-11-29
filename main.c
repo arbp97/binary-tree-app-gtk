@@ -121,7 +121,7 @@ int main(int argc, char *argv[])
 	// main loop
 	gtk_main();
 
-	delete_list(&TREE_LIST);
+	delete_list(TREE_LIST);
 
 	return EXIT_SUCCESS;
 }

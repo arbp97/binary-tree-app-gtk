@@ -38,7 +38,7 @@ void on_button_1_clicked(GtkButton* b, GtkSpinButton* s)
     we check whether a tree with this root
     exists or not
     */
-    if (find_tree_list(&TREE_LIST, spin_value))
+    if (find_tree_list(TREE_LIST, spin_value))
     {
         console_log("ERROR: Tree already exists with that root", TEXT_BUFFER_BOTTOM_LEFT, true);
     }
@@ -53,7 +53,7 @@ void on_button_1_clicked(GtkButton* b, GtkSpinButton* s)
 
         NodeList* new_node = create_node_list(new_tree);
 
-        add_node_list(&TREE_LIST, &new_node);
+        add_node_list(TREE_LIST, new_node);
 
         /***************************************************/
 
@@ -111,10 +111,10 @@ void on_button_2_clicked(GtkButton* b, GtkSpinButton* s)
                     atoi(gtk_label_get_text(GTK_LABEL(selected_row_label)));
 
         // finally, find the tree with that root
-        Tree* selected_tree = find_tree_list(&TREE_LIST, selected_row_tree_root);
+        Tree* selected_tree = find_tree_list(TREE_LIST, selected_row_tree_root);
 
         /* Adding the new node to the selected tree */
-        if (add_node_tree(&selected_tree, spin_value))
+        if (add_node_tree(selected_tree, spin_value))
             console_log("Node Added to tree", TEXT_BUFFER_BOTTOM_LEFT, true);
         else
             console_log("ERROR: node was not created: node already exists", TEXT_BUFFER_BOTTOM_LEFT, true);
@@ -144,7 +144,7 @@ void on_button_3_clicked(GtkButton* b)
                     atoi(gtk_label_get_text(GTK_LABEL(selected_row_label)));
 
         // finally, find the tree with that root
-        Tree* selected_tree = find_tree_list(&TREE_LIST, selected_row_tree_root);
+        Tree* selected_tree = find_tree_list(TREE_LIST, selected_row_tree_root);
 
         // iterators to clear the text buffer
         GtkTextIter start, end;
@@ -157,7 +157,7 @@ void on_button_3_clicked(GtkButton* b)
         gtk_text_buffer_delete(GTK_TEXT_BUFFER(TEXT_BUFFER_BUTTON_3), &start, &end);
 
         // prints the tree in pre order
-        pre_order(&selected_tree->root);
+        pre_order(selected_tree->root);
     }
 }
 

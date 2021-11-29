@@ -67,7 +67,7 @@ NodeList* create_node_list(Data data_ptr);
    Pre: El nodo no debe estar agregado.
    Post:Agrega un nodo al final de la lista.
 */
-void add_node_list(List** list, NodeList** node);
+void add_node_list(List* list, NodeList* node);
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
@@ -76,21 +76,21 @@ void add_node_list(List** list, NodeList** node);
    Pre: El nodo debe haber sido creado.
    Post: Elimina el nodo pasado por parámetro.
 */
-void delete_node_list(List** list, NodeList** node_list_ptr);
+void delete_node_list(List* list, NodeList* node_list_ptr);
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 /*
    Elimina una lista
 */
-void delete_list(List** list);
+void delete_list(List* list);
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 /*  Devuelve el tamaño de la lista.
     Pre:La lista debe existir.
     Post:Devuelve un int con la cantidad de elementos de la lista.
 */
-int length_of_list(List** list);
+int length_of_list(List* list);
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
@@ -99,7 +99,7 @@ int length_of_list(List** list);
    Post:Devuelve un booleano indicando si la lista está vacía o no.
 
 */
-bool is_list_empty(List** list);
+bool is_list_empty(List* list);
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
