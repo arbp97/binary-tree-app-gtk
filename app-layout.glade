@@ -39,10 +39,6 @@ This program is free software: you can redistribute it and/or modify
     <property name="page-increment">10</property>
   </object>
   <object class="GtkTextBuffer" id="button-3-buffer"/>
-  <object class="GtkTextBuffer" id="console-text-buffer">
-    <property name="text" translatable="yes">WORK IN PROGRESS
-</property>
-  </object>
   <object class="GtkWindow" id="main-window">
     <property name="can-focus">False</property>
     <property name="title" translatable="yes">BTree View</property>
@@ -249,27 +245,57 @@ This program is free software: you can redistribute it and/or modify
         <child>
           <object class="GtkFlowBoxChild" id="container-bottom-left">
             <property name="width-request">100</property>
-            <property name="height-request">80</property>
+            <property name="height-request">-1</property>
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <child>
-              <object class="GtkScrolledWindow" id="scrolled-bottom-left">
+              <object class="GtkBox">
                 <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="hadjustment">adj-hor-scroll-text</property>
-                <property name="vadjustment">adj-vert-scroll-text</property>
-                <property name="shadow-type">in</property>
+                <property name="can-focus">False</property>
+                <property name="orientation">vertical</property>
+                <property name="spacing">5</property>
                 <child>
-                  <object class="GtkTextView" id="text-bottom-left">
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="tooltip-text" translatable="yes">Program log</property>
+                    <property name="label" translatable="yes">Console</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Ubuntu 12"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkScrolledWindow" id="scrolled-bottom-left">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
-                    <property name="editable">False</property>
-                    <property name="cursor-visible">False</property>
-                    <property name="buffer">console-text-buffer</property>
-                    <property name="accepts-tab">False</property>
-                    <property name="input-purpose">terminal</property>
-                    <property name="monospace">True</property>
+                    <property name="vexpand">True</property>
+                    <property name="hadjustment">adj-hor-scroll-text</property>
+                    <property name="vadjustment">adj-vert-scroll-text</property>
+                    <property name="shadow-type">in</property>
+                    <child>
+                      <object class="GtkTextView" id="text-bottom-left">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="editable">False</property>
+                        <property name="cursor-visible">False</property>
+                        <property name="buffer">console-text-buffer</property>
+                        <property name="accepts-tab">False</property>
+                        <property name="input-purpose">terminal</property>
+                        <property name="monospace">True</property>
+                      </object>
+                    </child>
                   </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
                 </child>
               </object>
             </child>
@@ -278,27 +304,58 @@ This program is free software: you can redistribute it and/or modify
         <child>
           <object class="GtkFlowBoxChild" id="container-bottom-right">
             <property name="width-request">100</property>
-            <property name="height-request">80</property>
+            <property name="height-request">-1</property>
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <child>
-              <object class="GtkScrolledWindow" id="scrolled-bottom-right">
+              <object class="GtkBox">
                 <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="window-placement">bottom-right</property>
-                <property name="shadow-type">in</property>
+                <property name="can-focus">False</property>
+                <property name="orientation">vertical</property>
+                <property name="spacing">5</property>
                 <child>
-                  <object class="GtkViewport" id="view-bottom-right">
+                  <object class="GtkLabel">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
+                    <property name="tooltip-text" translatable="yes">List of created binary trees</property>
+                    <property name="label" translatable="yes">Tree List</property>
+                    <attributes>
+                      <attribute name="font-desc" value="Ubuntu 12"/>
+                    </attributes>
+                  </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkScrolledWindow" id="scrolled-bottom-right">
+                    <property name="height-request">165</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="vexpand">True</property>
+                    <property name="window-placement">bottom-right</property>
+                    <property name="shadow-type">in</property>
                     <child>
-                      <object class="GtkListBox" id="list-bottom-right">
+                      <object class="GtkViewport" id="view-bottom-right">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <signal name="selected-rows-changed" handler="on_list_selected_rows_changed" swapped="no"/>
+                        <child>
+                          <object class="GtkListBox" id="list-bottom-right">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <signal name="selected-rows-changed" handler="on_list_selected_rows_changed" swapped="no"/>
+                          </object>
+                        </child>
                       </object>
                     </child>
                   </object>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
                 </child>
               </object>
             </child>
@@ -306,5 +363,9 @@ This program is free software: you can redistribute it and/or modify
         </child>
       </object>
     </child>
+  </object>
+  <object class="GtkTextBuffer" id="console-text-buffer">
+    <property name="text" translatable="yes">WORK IN PROGRESS
+</property>
   </object>
 </interface>
