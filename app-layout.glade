@@ -70,7 +70,7 @@ This program is free software: you can redistribute it and/or modify
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <child>
-                      <!-- n-columns=2 n-rows=5 -->
+                      <!-- n-columns=2 n-rows=6 -->
                       <object class="GtkGrid" id="grid-top-left">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
@@ -244,6 +244,29 @@ This program is free software: you can redistribute it and/or modify
                           <packing>
                             <property name="left-attach">1</property>
                             <property name="top-attach">4</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkButton" id="button-6">
+                            <property name="label" translatable="yes">Show tree</property>
+                            <property name="visible">True</property>
+                            <property name="can-focus">True</property>
+                            <property name="receives-default">True</property>
+                            <signal name="clicked" handler="on_button_6_clicked" swapped="no"/>
+                          </object>
+                          <packing>
+                            <property name="left-attach">0</property>
+                            <property name="top-attach">5</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkLabel">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                          </object>
+                          <packing>
+                            <property name="left-attach">1</property>
+                            <property name="top-attach">5</property>
                           </packing>
                         </child>
                       </object>

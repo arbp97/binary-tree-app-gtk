@@ -50,6 +50,9 @@ void on_button_4_clicked(GtkButton* b);
 /* Prints the selected tree in post order */
 void on_button_5_clicked(GtkButton* b);
 
+/* shows the selected tree in viewport */
+void on_button_6_clicked(GtkButton* b);
+
 /* Logs when the selected tree changes */
 void on_list_selected_rows_changed(GtkListBox* l, GtkListBoxRow* r);
 

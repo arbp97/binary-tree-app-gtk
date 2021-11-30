@@ -16,34 +16,39 @@ This program is free software: you can redistribute it and/or modify
 
 #include "tree.h"
 
-Tree* create_tree(int data)
+Tree *create_tree(int data)
 {
-	Tree* new = malloc(sizeof(Tree));
+	Tree *new = malloc(sizeof(Tree));
 	new->root = create_node_tree(data);
+	new->root->x_pos = ROOT_WIDGET_POS_X;
+	new->root->y_pos = ROOT_WIDGET_POS_Y;
 
 	return new;
 }
 
-NodeTree* create_node_tree(int data)
+NodeTree *create_node_tree(int data)
 {
-	NodeTree* new = malloc(sizeof(NodeTree));
+	NodeTree *new = malloc(sizeof(NodeTree));
 	new->data = data;
 	new->left = NULL;
 	new->right = NULL;
+	char tmp[10];
+	sprintf(tmp, "%i", data);
+	new->widget = gtk_button_new_with_label(tmp);
 
 	return new;
 }
 
 /******************************************************************************/
 
-bool add_node_tree(Tree* tree, int data)
+bool add_node_tree(Tree *tree, int data)
 {
-	NodeTree* new_node = create_node_tree(data);
+	NodeTree *new_node = create_node_tree(data);
 
 	return push_node_tree(tree->root, new_node);
 }
 
-bool push_node_tree(NodeTree* root, NodeTree* new_node)
+bool push_node_tree(NodeTree *root, NodeTree *new_node)
 {
 	bool result;
 
@@ -56,6 +61,8 @@ bool push_node_tree(NodeTree* root, NodeTree* new_node)
 		if (!root->left)
 		{
 			root->left = new_node;
+			root->left->x_pos = root->x_pos - 50;
+			root->left->y_pos = root->y_pos + 50;
 			result = true;
 		}
 		else
@@ -74,6 +81,8 @@ bool push_node_tree(NodeTree* root, NodeTree* new_node)
 		if (!root->right)
 		{
 			root->right = new_node;
+			root->right->x_pos = root->x_pos + 50;
+			root->right->y_pos = root->y_pos + 50;
 			result = true;
 		}
 		else
@@ -98,7 +107,7 @@ bool push_node_tree(NodeTree* root, NodeTree* new_node)
 
 /******************************************************************************/
 
-void pre_order(NodeTree* root)
+void pre_order(NodeTree *root)
 {
 	/*
 	Pre order algorithm:
@@ -109,8 +118,8 @@ void pre_order(NodeTree* root)
 
 	/*->pass through root<-*/
 	char tmp[16];
-	sprintf(tmp,"[%i] ",root->data);
-	console_log(tmp,TEXT_BUFFER_BUTTON_3, false);
+	sprintf(tmp, "[%i] ", root->data);
+	console_log(tmp, TEXT_BUFFER_BUTTON_3, false);
 
 	/*
 	If the left node exists, then we go over the left
@@ -127,7 +136,7 @@ void pre_order(NodeTree* root)
 		pre_order(root->right);
 }
 
-void in_order(NodeTree* root)
+void in_order(NodeTree *root)
 {
 	/*
 	In order algorithm:
@@ -145,8 +154,8 @@ void in_order(NodeTree* root)
 
 	// pass through root
 	char tmp[16];
-	sprintf(tmp,"[%i] ",root->data);
-	console_log(tmp,TEXT_BUFFER_BUTTON_4, false);
+	sprintf(tmp, "[%i] ", root->data);
+	console_log(tmp, TEXT_BUFFER_BUTTON_4, false);
 
 	/*
 	If the right node exists, then we go over the right
@@ -156,7 +165,7 @@ void in_order(NodeTree* root)
 		in_order(root->right);
 }
 
-void post_order(NodeTree* root)
+void post_order(NodeTree *root)
 {
 	/*
 	Post order algorithm:
@@ -183,11 +192,11 @@ void post_order(NodeTree* root)
 	pass through root
 	*/
 	char tmp[16];
-	sprintf(tmp,"[%i] ",root->data);
-	console_log(tmp,TEXT_BUFFER_BUTTON_5, false);
+	sprintf(tmp, "[%i] ", root->data);
+	console_log(tmp, TEXT_BUFFER_BUTTON_5, false);
 }
 
-NodeTree* pre_order_search(NodeTree* root, int data, NodeTree* result)
+NodeTree *pre_order_search(NodeTree *root, int data, NodeTree *result)
 {
 	/* raises flag if the data is found */
 	if (root->data == data)
@@ -206,22 +215,35 @@ NodeTree* pre_order_search(NodeTree* root, int data, NodeTree* result)
 	return result;
 }
 
-Tree* find_tree_list(struct List* list, int tree_root)
+void pre_order_show_tree(NodeTree *root)
+{
+	/*->pass through root<-*/
+	gtk_fixed_put(GTK_FIXED(FIXED_TOP_RIGHT),
+					root->widget, root->x_pos, root->y_pos);
+
+	if (root->left)
+		pre_order_show_tree(root->left);
+
+	if (root->right)
+		pre_order_show_tree(root->right);
+}
+
+Tree *find_tree_list(struct List *list, int tree_root)
 {
 	//node to go over the list
-	NodeList* cursor = NULL;
+	NodeList *cursor = NULL;
 
 	/*
 	result is used to check the current cursor node's
 	data, and to return it when found
 	*/
-	Tree* result = NULL;
-	NodeTree* result_root = NULL;
+	Tree *result = NULL;
+	NodeTree *result_root = NULL;
 	cursor = list->head;
 
 	while (cursor != NULL)
 	{
-		result = (Tree*) cursor->data_ptr;
+		result = (Tree *)cursor->data_ptr;
 		result_root = result->root;
 
 		if (result_root->data == tree_root)
@@ -243,7 +265,7 @@ Tree* find_tree_list(struct List* list, int tree_root)
 	return result;
 }
 
-void post_order_delete(NodeTree* root)
+void post_order_delete(NodeTree *root)
 {
 	/*
 	Deletes all nodes in a tree recursively, using
@@ -260,9 +282,9 @@ void post_order_delete(NodeTree* root)
 	root = NULL;
 }
 
-NodeTree* search_tree(Tree* tree, int data)
+NodeTree *search_tree(Tree *tree, int data)
 {
-	NodeTree* result = NULL;
+	NodeTree *result = NULL;
 
 	if (!tree->root)
 		console_log("ERROR: Empty tree", TEXT_BUFFER_BOTTOM_LEFT, true);
@@ -272,7 +294,7 @@ NodeTree* search_tree(Tree* tree, int data)
 	return result;
 }
 
-void delete_tree(Tree* tree)
+void delete_tree(Tree *tree)
 {
 	post_order_delete(tree->root);
 

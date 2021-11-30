@@ -23,9 +23,16 @@ This program is free software: you can redistribute it and/or modify
 #include <stdbool.h>
 #include "events.h"
 
+/*
+  widget: representation of the node in the viewport
+  x/y_pos: coordinates of the widget on the app
+*/
 typedef struct NodeTree
 {
   int data;
+  GtkWidget* widget;
+  gint x_pos;
+  gint y_pos;
   struct NodeTree* right;
   struct NodeTree* left;
 } NodeTree;
@@ -82,6 +89,11 @@ void post_order_delete(NodeTree* root);
   Used by search_tree function
 */
 NodeTree* pre_order_search(NodeTree* root, int data, NodeTree* result);
+
+/*
+  "Draw" tree nodes into the viewport
+*/
+void pre_order_show_tree(NodeTree* root);
 
 /*
   finds a tree with the same root

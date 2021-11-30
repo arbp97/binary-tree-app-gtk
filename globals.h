@@ -39,6 +39,7 @@ extern GtkWidget *BUTTON_2;
 extern GtkWidget *BUTTON_3;
 extern GtkWidget *BUTTON_4;
 extern GtkWidget *BUTTON_5;
+extern GtkWidget *BUTTON_6;
 extern GtkWidget *SPIN_BUTTON_1;
 extern GtkWidget *SPIN_BUTTON_2;
 extern GtkWidget *SCROLL_WINDOW_BOTTON_LEFT;
@@ -52,7 +53,6 @@ extern GtkWidget *TEXT_BUFFER_BUTTON_4;
 extern GtkWidget *TEXT_BUFFER_BUTTON_5;
 extern GtkBuilder *BUILDER;
 
-// Lists
 
 extern struct List *TREE_LIST;
 
@@ -62,5 +62,12 @@ typedef enum Arrangement
     IN_ORDER = 1,
     POST_ORDER = 2
 } Arrangement;
+
+/* 
+    ROOT_WIDGET_POS_X/Y
+    used to set the root node on the viewport
+*/
+static int ROOT_WIDGET_POS_X = 210;
+static int ROOT_WIDGET_POS_Y = 0;
 
 #endif // !_GLOBALS_H_

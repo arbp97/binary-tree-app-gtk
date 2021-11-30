@@ -34,6 +34,7 @@ GtkWidget *BUTTON_2;
 GtkWidget *BUTTON_3;
 GtkWidget *BUTTON_4;
 GtkWidget *BUTTON_5;
+GtkWidget *BUTTON_6;
 GtkWidget *SPIN_BUTTON_1;
 GtkWidget *SPIN_BUTTON_2;
 GtkWidget *SCROLL_WINDOW_BOTTON_LEFT;
@@ -96,6 +97,7 @@ int main(int argc, char *argv[])
 	BUTTON_3 = GTK_WIDGET(gtk_builder_get_object(BUILDER, "button-3"));
 	BUTTON_4 = GTK_WIDGET(gtk_builder_get_object(BUILDER, "button-4"));
 	BUTTON_5 = GTK_WIDGET(gtk_builder_get_object(BUILDER, "button-5"));
+	BUTTON_6 = GTK_WIDGET(gtk_builder_get_object(BUILDER, "button-6"));
 
 	SPIN_BUTTON_1 = GTK_WIDGET(gtk_builder_get_object(BUILDER, "spin-button-1"));
 	SPIN_BUTTON_2 = GTK_WIDGET(gtk_builder_get_object(BUILDER, "spin-button-2"));
