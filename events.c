@@ -19,14 +19,16 @@ This program is free software: you can redistribute it and/or modify
 void console_log(const gchar *text, GtkWidget* buffer, bool newline)
 {
     char tmp[strlen(text)+1];
+    GtkTextIter end;
+
+    gtk_text_buffer_get_end_iter(GTK_TEXT_BUFFER(buffer), &end);
 
     if(newline) sprintf(tmp, "\n%s", text);
     else sprintf(tmp, "%s", text);
 
-    gtk_text_buffer_insert_at_cursor(
+    gtk_text_buffer_insert(
                     GTK_TEXT_BUFFER(buffer),
-                    tmp,
-                    strlen(tmp));
+                    &end, tmp, strlen(tmp));
 }
 
 void on_button_1_clicked(GtkButton* b, GtkSpinButton* s)
