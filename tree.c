@@ -146,7 +146,7 @@ void in_order(NodeTree* root)
 	// pass through root
 	char tmp[16];
 	sprintf(tmp,"[%i] ",root->data);
-	//console_log(tmp,);
+	console_log(tmp,TEXT_BUFFER_BUTTON_4, false);
 
 	/*
 	If the right node exists, then we go over the right
@@ -184,7 +184,7 @@ void post_order(NodeTree* root)
 	*/
 	char tmp[16];
 	sprintf(tmp,"[%i] ",root->data);
-	//console_log(tmp);
+	console_log(tmp,TEXT_BUFFER_BUTTON_5, false);
 }
 
 NodeTree* pre_order_search(NodeTree* root, int data, NodeTree* result)

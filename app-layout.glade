@@ -39,6 +39,9 @@ This program is free software: you can redistribute it and/or modify
     <property name="page-increment">10</property>
   </object>
   <object class="GtkTextBuffer" id="button-3-buffer"/>
+  <object class="GtkTextBuffer" id="button-4-buffer"/>
+  <object class="GtkTextBuffer" id="button-5-buffer"/>
+  <object class="GtkTextBuffer" id="console-text-buffer"/>
   <object class="GtkWindow" id="main-window">
     <property name="can-focus">False</property>
     <property name="title" translatable="yes">BTree View</property>
@@ -107,6 +110,7 @@ This program is free software: you can redistribute it and/or modify
                             <property name="visible">True</property>
                             <property name="can-focus">True</property>
                             <property name="receives-default">True</property>
+                            <signal name="clicked" handler="on_button_4_clicked" swapped="no"/>
                           </object>
                           <packing>
                             <property name="left-attach">0</property>
@@ -119,29 +123,10 @@ This program is free software: you can redistribute it and/or modify
                             <property name="visible">True</property>
                             <property name="can-focus">True</property>
                             <property name="receives-default">True</property>
+                            <signal name="clicked" handler="on_button_5_clicked" swapped="no"/>
                           </object>
                           <packing>
                             <property name="left-attach">0</property>
-                            <property name="top-attach">4</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkLabel">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                          </object>
-                          <packing>
-                            <property name="left-attach">1</property>
-                            <property name="top-attach">3</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkLabel">
-                            <property name="visible">True</property>
-                            <property name="can-focus">False</property>
-                          </object>
-                          <packing>
-                            <property name="left-attach">1</property>
                             <property name="top-attach">4</property>
                           </packing>
                         </child>
@@ -205,6 +190,60 @@ This program is free software: you can redistribute it and/or modify
                           <packing>
                             <property name="left-attach">1</property>
                             <property name="top-attach">2</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkScrolledWindow" id="scrolled-button-4">
+                            <property name="visible">True</property>
+                            <property name="can-focus">True</property>
+                            <property name="shadow-type">in</property>
+                            <child>
+                              <object class="GtkViewport" id="view-button-4">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <child>
+                                  <object class="GtkTextView" id="text-button-4">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">True</property>
+                                    <property name="editable">False</property>
+                                    <property name="buffer">button-4-buffer</property>
+                                    <property name="accepts-tab">False</property>
+                                    <property name="monospace">True</property>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="left-attach">1</property>
+                            <property name="top-attach">3</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkScrolledWindow" id="scrolled-button-5">
+                            <property name="visible">True</property>
+                            <property name="can-focus">True</property>
+                            <property name="shadow-type">in</property>
+                            <child>
+                              <object class="GtkViewport" id="view-button-5">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <child>
+                                  <object class="GtkTextView" id="text-button-5">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">True</property>
+                                    <property name="editable">False</property>
+                                    <property name="buffer">button-5-buffer</property>
+                                    <property name="accepts-tab">False</property>
+                                    <property name="monospace">True</property>
+                                  </object>
+                                </child>
+                              </object>
+                            </child>
+                          </object>
+                          <packing>
+                            <property name="left-attach">1</property>
+                            <property name="top-attach">4</property>
                           </packing>
                         </child>
                       </object>
@@ -363,9 +402,5 @@ This program is free software: you can redistribute it and/or modify
         </child>
       </object>
     </child>
-  </object>
-  <object class="GtkTextBuffer" id="console-text-buffer">
-    <property name="text" translatable="yes">WORK IN PROGRESS
-</property>
   </object>
 </interface>

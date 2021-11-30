@@ -48,10 +48,19 @@ extern GtkWidget *LIST_BOTTOM_RIGHT;
 extern GtkWidget *TEXT_VIEW_BOTTOM_LEFT;
 extern GtkWidget *TEXT_BUFFER_BOTTOM_LEFT;
 extern GtkWidget *TEXT_BUFFER_BUTTON_3;
+extern GtkWidget *TEXT_BUFFER_BUTTON_4;
+extern GtkWidget *TEXT_BUFFER_BUTTON_5;
 extern GtkBuilder *BUILDER;
 
 // Lists
 
 extern struct List *TREE_LIST;
+
+typedef enum Arrangement
+{
+    PRE_ORDER = 0,
+    IN_ORDER = 1,
+    POST_ORDER = 2
+} Arrangement;
 
 #endif // !_GLOBALS_H_

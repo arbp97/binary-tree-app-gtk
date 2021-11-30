@@ -122,6 +122,45 @@ void on_button_2_clicked(GtkButton* b, GtkSpinButton* s)
 
 }
 
+void show_tree_arrangement_on_buffer(GtkListBoxRow* selected_row, Arrangement arrangement, GtkWidget* buffer)
+{
+    /*
+        NOTICE: the buffer argument actually doesn't assure that
+        the data will be written in it. The *_order functions in
+        tree have fixed buffers to write to... #FIXME
+    */
+
+    // get child out of the selected row, a label
+    GtkWidget* selected_row_label =
+                gtk_bin_get_child(GTK_BIN(selected_row));
+
+    // get the tree root out of the label
+    int selected_row_tree_root =
+                atoi(gtk_label_get_text(GTK_LABEL(selected_row_label)));
+
+    // finally, find the tree with that root
+    Tree* selected_tree = find_tree_list(TREE_LIST, selected_row_tree_root);
+
+    // iterators to clear the text buffer
+    GtkTextIter start, end;
+
+    // get start and end points of said buffer
+    gtk_text_buffer_get_start_iter(GTK_TEXT_BUFFER(buffer), &start);
+    gtk_text_buffer_get_end_iter(GTK_TEXT_BUFFER(buffer), &end);
+
+    // clears buffer
+    gtk_text_buffer_delete(GTK_TEXT_BUFFER(buffer), &start, &end);
+
+    // prints the tree in specified arrangement
+    switch (arrangement)
+    {
+        case PRE_ORDER: pre_order(selected_tree->root); break;
+        case IN_ORDER: in_order(selected_tree->root); break;
+        case POST_ORDER: post_order(selected_tree->root); break;
+        default: break;
+    }
+}
+
 void on_button_3_clicked(GtkButton* b)
 {
     GtkListBoxRow* selected_row =
@@ -130,35 +169,35 @@ void on_button_3_clicked(GtkButton* b)
     /* checking if the row is actually selected,
         or if it even exists */
     if(!selected_row)
-    {
         console_log("ERROR: no tree selected", TEXT_BUFFER_BOTTOM_LEFT, true);
-    }
     else
-    {
-        // get child out of the selected row, a label
-        GtkWidget* selected_row_label =
-                    gtk_bin_get_child(GTK_BIN(selected_row));
+        show_tree_arrangement_on_buffer(selected_row, PRE_ORDER, TEXT_BUFFER_BUTTON_3);
+}
 
-        // get the tree root out of the label
-        int selected_row_tree_root =
-                    atoi(gtk_label_get_text(GTK_LABEL(selected_row_label)));
+void on_button_4_clicked(GtkButton* b)
+{
+    GtkListBoxRow* selected_row =
+                    gtk_list_box_get_selected_row(GTK_LIST_BOX(LIST_BOTTOM_RIGHT));
 
-        // finally, find the tree with that root
-        Tree* selected_tree = find_tree_list(TREE_LIST, selected_row_tree_root);
+    /* checking if the row is actually selected,
+        or if it even exists */
+    if(!selected_row)
+        console_log("ERROR: no tree selected", TEXT_BUFFER_BOTTOM_LEFT, true);
+    else
+        show_tree_arrangement_on_buffer(selected_row, IN_ORDER, TEXT_BUFFER_BUTTON_4);
+}
 
-        // iterators to clear the text buffer
-        GtkTextIter start, end;
+void on_button_5_clicked(GtkButton* b)
+{
+    GtkListBoxRow* selected_row =
+                    gtk_list_box_get_selected_row(GTK_LIST_BOX(LIST_BOTTOM_RIGHT));
 
-        // get start and end points of said buffer
-        gtk_text_buffer_get_start_iter(GTK_TEXT_BUFFER(TEXT_BUFFER_BUTTON_3), &start);
-        gtk_text_buffer_get_end_iter(GTK_TEXT_BUFFER(TEXT_BUFFER_BUTTON_3), &end);
-
-        // clears buffer
-        gtk_text_buffer_delete(GTK_TEXT_BUFFER(TEXT_BUFFER_BUTTON_3), &start, &end);
-
-        // prints the tree in pre order
-        pre_order(selected_tree->root);
-    }
+    /* checking if the row is actually selected,
+        or if it even exists */
+    if(!selected_row)
+        console_log("ERROR: no tree selected", TEXT_BUFFER_BOTTOM_LEFT, true);
+    else
+        show_tree_arrangement_on_buffer(selected_row, POST_ORDER, TEXT_BUFFER_BUTTON_5);
 }
 
 void on_list_selected_rows_changed(GtkListBox* l, GtkListBoxRow* r)

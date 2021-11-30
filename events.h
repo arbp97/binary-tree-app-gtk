@@ -38,8 +38,17 @@ void on_button_1_clicked(GtkButton* b, GtkSpinButton* s);
 /* Inserts new node in selected tree*/
 void on_button_2_clicked(GtkButton* b, GtkSpinButton* s);
 
+/* prints tree in specified buffer and arrangement*/
+void show_tree_arrangement_on_buffer(GtkListBoxRow* selected_row, Arrangement arrangement, GtkWidget* buffer);
+
 /* Prints the selected tree in pre order */
 void on_button_3_clicked(GtkButton* b);
+
+/* Prints the selected tree in order */
+void on_button_4_clicked(GtkButton* b);
+
+/* Prints the selected tree in post order */
+void on_button_5_clicked(GtkButton* b);
 
 /* Logs when the selected tree changes */
 void on_list_selected_rows_changed(GtkListBox* l, GtkListBoxRow* r);
