@@ -15,4 +15,6 @@
 
 #!/bin/sh
 
+glib-compile-resources --target=layout.c --generate-source resource.xml
+
 gcc *.c -o btree-view -lm `pkg-config --cflags --libs gtk+-3.0` -export-dynamic

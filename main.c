@@ -58,8 +58,9 @@ int main(int argc, char *argv[])
 	// establish contact with xml code used to adjust widget settings
 	//---------------------------------------------------------------------
 
-	BUILDER = gtk_builder_new_from_file("app-layout.glade");
-
+	//BUILDER = gtk_builder_new_from_file("app-layout.glade");
+	BUILDER = gtk_builder_new_from_resource("/app-layout/app-layout.glade");
+	
 	MAIN_WINDOW = GTK_WIDGET(gtk_builder_get_object(BUILDER, "main-window"));
 
 	g_signal_connect(MAIN_WINDOW, "destroy", G_CALLBACK(gtk_main_quit), NULL);

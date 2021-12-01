@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Exec=/usr/bin/btree-view
+Icon=btree-view
+Type=Application
+Terminal=false
+Comment=Visualize Binary Trees
+Name=BTree View
+GenericName=BTree View
+StartupWMClass=btree-view
+StartupNotify=false
+Categories=Utility;
+Version=0.1.0
