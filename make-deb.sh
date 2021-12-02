@@ -32,7 +32,7 @@ Maintainer: arbp97
 Depends: libgtk-3-0
 Priority: optional
 Homepage: https://github.com/arbp97/btree-view
-Description: CCreate and visualize binary trees" > packaging/DEBIAN/control
+Description: Create and visualize binary trees" > packaging/DEBIAN/control
 
 # Build the package
 
