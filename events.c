@@ -128,6 +128,7 @@ void on_button_2_clicked(GtkButton *b, GtkSpinButton *s)
 void show_tree_arrangement_on_buffer(GtkListBoxRow *selected_row, Arrangement arrangement, GtkWidget *buffer)
 {
     /*
+        Shows the current nodes of the tree in the text area used for that arrangement.
         NOTICE: the buffer argument actually doesn't assure that
         the data will be written in it. The *_order functions in
         tree have fixed buffers to write to... #FIXME
@@ -212,6 +213,11 @@ void on_button_5_clicked(GtkButton *b)
 
 void on_button_6_clicked(GtkButton *b)
 {
+    /*
+        Using the coordinates stored in every treenode, shows the tree
+        in the viewport.
+    */
+
     GtkListBoxRow *selected_row =
         gtk_list_box_get_selected_row(GTK_LIST_BOX(LIST_BOTTOM_RIGHT));
 
@@ -237,6 +243,12 @@ void on_button_6_clicked(GtkButton *b)
 
 void on_list_selected_rows_changed(GtkListBox *l, GtkListBoxRow *r)
 {
+
+    /*
+        Shows the current selected tree and cleans the viewport when
+        a new tree is selected from the list.
+    */
+
     char tmp[32];
     GtkListBoxRow *row =
         gtk_list_box_get_selected_row(GTK_LIST_BOX(LIST_BOTTOM_RIGHT));
