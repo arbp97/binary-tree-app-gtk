@@ -4041,24 +4041,24 @@ GResource *resource_get_resource (void)
 #ifdef G_HAS_CONSTRUCTORS
 
 #ifdef G_DEFINE_CONSTRUCTOR_NEEDS_PRAGMA
-#pragma G_DEFINE_CONSTRUCTOR_PRAGMA_ARGS(resourceresource_constructor)
+#pragma G_DEFINE_CONSTRUCTOR_PRAGMA_ARGS(resource_constructor)
 #endif
-G_DEFINE_CONSTRUCTOR(resourceresource_constructor)
+G_DEFINE_CONSTRUCTOR(resource_constructor)
 #ifdef G_DEFINE_DESTRUCTOR_NEEDS_PRAGMA
-#pragma G_DEFINE_DESTRUCTOR_PRAGMA_ARGS(resourceresource_destructor)
+#pragma G_DEFINE_DESTRUCTOR_PRAGMA_ARGS(resource_destructor)
 #endif
-G_DEFINE_DESTRUCTOR(resourceresource_destructor)
+G_DEFINE_DESTRUCTOR(resource_destructor)
 
 #else
 #warning "Constructor not supported on this compiler, linking in resources will not work"
 #endif
 
-static void resourceresource_constructor (void)
+static void resource_constructor (void)
 {
   g_static_resource_init (&static_resource);
 }
 
-static void resourceresource_destructor (void)
+static void resource_destructor (void)
 {
   g_static_resource_fini (&static_resource);
 }
