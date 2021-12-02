@@ -2,5 +2,6 @@
 <gresources>
 	<gresource prefix="app-layout">
 		<file preprocess="xml-stripblanks">app-layout.glade</file>
+		<file>res/btree-view.png</file>
 	</gresource>
 </gresources>
