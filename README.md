@@ -1,6 +1,5 @@
 # BTree View
 
-**About**
 This program offers a simple interface to play around with binary tree data structures,
 visualize them and arrange them in order.
 
