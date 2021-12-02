@@ -35,6 +35,7 @@ GtkWidget *BUTTON_3;
 GtkWidget *BUTTON_4;
 GtkWidget *BUTTON_5;
 GtkWidget *BUTTON_6;
+GtkWidget *BUTTON_7;
 GtkWidget *SPIN_BUTTON_1;
 GtkWidget *SPIN_BUTTON_2;
 GtkWidget *SCROLL_WINDOW_BOTTON_LEFT;
@@ -60,7 +61,7 @@ int main(int argc, char *argv[])
 
 	//BUILDER = gtk_builder_new_from_file("app-layout.glade");
 	BUILDER = gtk_builder_new_from_resource("/app-layout/app-layout.glade");
-	
+
 	MAIN_WINDOW = GTK_WIDGET(gtk_builder_get_object(BUILDER, "main-window"));
 
 	g_signal_connect(MAIN_WINDOW, "destroy", G_CALLBACK(gtk_main_quit), NULL);
@@ -70,28 +71,28 @@ int main(int argc, char *argv[])
 	/* Getting widgets directly from the layout file w/ the builder */
 
 	MAIN_CONTAINER =
-			GTK_WIDGET(gtk_builder_get_object(BUILDER, "main-container"));
+		GTK_WIDGET(gtk_builder_get_object(BUILDER, "main-container"));
 	CONTAINER_TOP_LEFT =
-			GTK_WIDGET(gtk_builder_get_object(BUILDER, "container-top-left"));
+		GTK_WIDGET(gtk_builder_get_object(BUILDER, "container-top-left"));
 	CONTAINER_TOP_RIGHT =
-			GTK_WIDGET(gtk_builder_get_object(BUILDER, "container-top-right"));
+		GTK_WIDGET(gtk_builder_get_object(BUILDER, "container-top-right"));
 	CONTAINER_BOTTOM_LEFT =
-			GTK_WIDGET(gtk_builder_get_object(BUILDER, "container-bottom-left"));
+		GTK_WIDGET(gtk_builder_get_object(BUILDER, "container-bottom-left"));
 	CONTAINER_BOTTOM_RIGHT =
-			GTK_WIDGET(gtk_builder_get_object(BUILDER, "container-bottom-right"));
+		GTK_WIDGET(gtk_builder_get_object(BUILDER, "container-bottom-right"));
 
 	SCROLL_WINDOW_TOP_LEFT =
-			GTK_WIDGET(gtk_builder_get_object(BUILDER, "scrolled-top-left"));
+		GTK_WIDGET(gtk_builder_get_object(BUILDER, "scrolled-top-left"));
 	SCROLL_WINDOW_TOP_RIGHT =
-			GTK_WIDGET(gtk_builder_get_object(BUILDER, "scrolled-top-right"));
+		GTK_WIDGET(gtk_builder_get_object(BUILDER, "scrolled-top-right"));
 	VIEWPORT_TOP_LEFT =
-			GTK_WIDGET(gtk_builder_get_object(BUILDER, "view-top-left"));
+		GTK_WIDGET(gtk_builder_get_object(BUILDER, "view-top-left"));
 	VIEWPORT_TOP_RIGHT =
-			GTK_WIDGET(gtk_builder_get_object(BUILDER, "view-top-right"));
+		GTK_WIDGET(gtk_builder_get_object(BUILDER, "view-top-right"));
 	FIXED_TOP_RIGHT =
-			GTK_WIDGET(gtk_builder_get_object(BUILDER, "fixed-top-right"));
+		GTK_WIDGET(gtk_builder_get_object(BUILDER, "fixed-top-right"));
 	GRID_TOP_LEFT =
-			GTK_WIDGET(gtk_builder_get_object(BUILDER, "grid-top-left"));
+		GTK_WIDGET(gtk_builder_get_object(BUILDER, "grid-top-left"));
 
 	BUTTON_1 = GTK_WIDGET(gtk_builder_get_object(BUILDER, "button-1"));
 	BUTTON_2 = GTK_WIDGET(gtk_builder_get_object(BUILDER, "button-2"));
@@ -99,28 +100,29 @@ int main(int argc, char *argv[])
 	BUTTON_4 = GTK_WIDGET(gtk_builder_get_object(BUILDER, "button-4"));
 	BUTTON_5 = GTK_WIDGET(gtk_builder_get_object(BUILDER, "button-5"));
 	BUTTON_6 = GTK_WIDGET(gtk_builder_get_object(BUILDER, "button-6"));
+	BUTTON_7 = GTK_WIDGET(gtk_builder_get_object(BUILDER, "button-7"));
 
 	SPIN_BUTTON_1 = GTK_WIDGET(gtk_builder_get_object(BUILDER, "spin-button-1"));
 	SPIN_BUTTON_2 = GTK_WIDGET(gtk_builder_get_object(BUILDER, "spin-button-2"));
 
 	SCROLL_WINDOW_BOTTON_LEFT =
-			GTK_WIDGET(gtk_builder_get_object(BUILDER, "scrolled-bottom-left"));
+		GTK_WIDGET(gtk_builder_get_object(BUILDER, "scrolled-bottom-left"));
 	SCROLL_WINDOW_BOTTON_RIGHT =
-			GTK_WIDGET(gtk_builder_get_object(BUILDER, "scrolled-bottom-right"));
+		GTK_WIDGET(gtk_builder_get_object(BUILDER, "scrolled-bottom-right"));
 	VIEWPORT_BOTTOM_RIGHT =
-			GTK_WIDGET(gtk_builder_get_object(BUILDER, "view-bottom-right"));
+		GTK_WIDGET(gtk_builder_get_object(BUILDER, "view-bottom-right"));
 	LIST_BOTTOM_RIGHT =
-			GTK_WIDGET(gtk_builder_get_object(BUILDER, "list-bottom-right"));
+		GTK_WIDGET(gtk_builder_get_object(BUILDER, "list-bottom-right"));
 	TEXT_VIEW_BOTTOM_LEFT =
-			GTK_WIDGET(gtk_builder_get_object(BUILDER, "text-bottom-left"));
+		GTK_WIDGET(gtk_builder_get_object(BUILDER, "text-bottom-left"));
 	TEXT_BUFFER_BOTTOM_LEFT =
-			GTK_WIDGET(gtk_builder_get_object(BUILDER, "console-text-buffer"));
+		GTK_WIDGET(gtk_builder_get_object(BUILDER, "console-text-buffer"));
 	TEXT_BUFFER_BUTTON_3 =
-			GTK_WIDGET(gtk_builder_get_object(BUILDER, "button-3-buffer"));
+		GTK_WIDGET(gtk_builder_get_object(BUILDER, "button-3-buffer"));
 	TEXT_BUFFER_BUTTON_4 =
-			GTK_WIDGET(gtk_builder_get_object(BUILDER, "button-4-buffer"));
+		GTK_WIDGET(gtk_builder_get_object(BUILDER, "button-4-buffer"));
 	TEXT_BUFFER_BUTTON_5 =
-			GTK_WIDGET(gtk_builder_get_object(BUILDER, "button-5-buffer"));
+		GTK_WIDGET(gtk_builder_get_object(BUILDER, "button-5-buffer"));
 
 	// creating b tree list
 	TREE_LIST = create_list();

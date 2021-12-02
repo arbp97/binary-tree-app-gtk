@@ -260,9 +260,12 @@ This program is free software: you can redistribute it and/or modify
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkLabel">
+                          <object class="GtkButton" id="button-7">
+                            <property name="label" translatable="yes">Delete tree</property>
                             <property name="visible">True</property>
-                            <property name="can-focus">False</property>
+                            <property name="can-focus">True</property>
+                            <property name="receives-default">True</property>
+                            <signal name="clicked" handler="on_button_7_clicked" swapped="no"/>
                           </object>
                           <packing>
                             <property name="left-attach">1</property>

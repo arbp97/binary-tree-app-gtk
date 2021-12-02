@@ -33,6 +33,20 @@ void console_log(const gchar *text, GtkWidget *buffer, bool newline)
         &end, tmp, strlen(tmp));
 }
 
+void clear_viewport()
+{
+    GList *children, *iter;
+
+    children = gtk_container_get_children(GTK_CONTAINER(FIXED_TOP_RIGHT));
+
+    for (iter = children; iter != NULL; iter = g_list_next(iter))
+        gtk_container_remove(GTK_CONTAINER(FIXED_TOP_RIGHT), g_object_ref(iter->data));
+
+    g_list_free(children);
+
+    gtk_widget_show_all(FIXED_TOP_RIGHT);
+}
+
 void on_button_1_clicked(GtkButton *b, GtkSpinButton *s)
 {
     // new tree root value
@@ -241,6 +255,46 @@ void on_button_6_clicked(GtkButton *b)
     }
 }
 
+void on_button_7_clicked(GtkButton *b)
+{
+    GtkListBoxRow *selected_row =
+        gtk_list_box_get_selected_row(GTK_LIST_BOX(LIST_BOTTOM_RIGHT));
+
+    if (!selected_row)
+        console_log("ERROR: no tree selected", TEXT_BUFFER_BOTTOM_LEFT, true);
+    else
+    {
+        GtkWidget *label = gtk_bin_get_child(GTK_BIN(selected_row));
+        char tmp[32];
+        int selected_tree_root = atoi(gtk_label_get_text(GTK_LABEL(label)));
+
+        sprintf(tmp, "%i", selected_tree_root);
+
+        /* finding and deleting the tree and its node in the list*/
+
+        Tree *selected_tree = find_tree_list(TREE_LIST, selected_tree_root);
+        NodeList *cursor = TREE_LIST->head;
+        bool found = false;
+
+        while (cursor && !found)
+            if (((Tree *)cursor->data_ptr) == selected_tree)
+                found = true;
+
+        delete_node_list(TREE_LIST, cursor);
+
+        delete_tree(selected_tree);
+
+        /*deleting the row in the bottom right list*/
+        gtk_list_box_unselect_all(GTK_LIST_BOX(LIST_BOTTOM_RIGHT));
+
+        gtk_container_remove(GTK_CONTAINER(LIST_BOTTOM_RIGHT), GTK_WIDGET(selected_row));
+
+        gtk_widget_show_all(LIST_BOTTOM_RIGHT);
+
+        clear_viewport();
+    }
+}
+
 void on_list_selected_rows_changed(GtkListBox *l, GtkListBoxRow *r)
 {
 
@@ -248,27 +302,23 @@ void on_list_selected_rows_changed(GtkListBox *l, GtkListBoxRow *r)
         Shows the current selected tree and cleans the viewport when
         a new tree is selected from the list.
     */
-
     char tmp[32];
     GtkListBoxRow *row =
         gtk_list_box_get_selected_row(GTK_LIST_BOX(LIST_BOTTOM_RIGHT));
-    GtkWidget *label = gtk_bin_get_child(GTK_BIN(row));
-    int selected_tree_root = atoi(gtk_label_get_text(GTK_LABEL(label)));
 
-    sprintf(tmp, "Tree selected: %i", selected_tree_root);
+    if (row)
+    {
+        GtkWidget *label = gtk_bin_get_child(GTK_BIN(row));
+        int selected_tree_root = atoi(gtk_label_get_text(GTK_LABEL(label)));
 
-    Tree *selected_tree = find_tree_list(TREE_LIST, selected_tree_root);
+        sprintf(tmp, "Tree selected: %i", selected_tree_root);
 
-    console_log(tmp, TEXT_BUFFER_BOTTOM_LEFT, true);
+        Tree *selected_tree = find_tree_list(TREE_LIST, selected_tree_root);
 
-    GList *children, *iter;
+        console_log(tmp, TEXT_BUFFER_BOTTOM_LEFT, true);
+    }
 
-    children = gtk_container_get_children(GTK_CONTAINER(FIXED_TOP_RIGHT));
+    /* clearing the viewport */
 
-    for(iter = children; iter != NULL; iter = g_list_next(iter))
-        gtk_container_remove(GTK_CONTAINER(FIXED_TOP_RIGHT), g_object_ref(iter->data));
-
-    g_list_free(children);
-
-    gtk_widget_show_all(FIXED_TOP_RIGHT);
+    clear_viewport();
 }

@@ -26,7 +26,7 @@ This program is free software: you can redistribute it and/or modify
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 /* Used to store data inside a node*/
-typedef void* Data;
+typedef void *Data;
 
 /*
    The node that conforms the list.
@@ -36,9 +36,9 @@ typedef void* Data;
 */
 typedef struct NodeList
 {
-	Data data_ptr;
-	struct NodeList* next;
-	struct NodeList* prev;
+   Data data_ptr;
+   struct NodeList *next;
+   struct NodeList *prev;
 } NodeList;
 
 /*
@@ -47,8 +47,8 @@ typedef struct NodeList
 */
 typedef struct List
 {
-	struct NodeList* head;
-	struct NodeList* tail;
+   struct NodeList *head;
+   struct NodeList *tail;
 } List;
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
@@ -56,49 +56,49 @@ typedef struct List
 /*
    Returns an empty list
 */
-List* create_list();
+List *create_list();
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 /*
    Returns a new node with specified data
 */
-NodeList* create_node_list(Data data_ptr);
+NodeList *create_node_list(Data data_ptr);
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 /*
    Puts the received node at the end of the list.
 */
-void add_node_list(List* list, NodeList* node);
+void add_node_list(List *list, NodeList *node);
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 /*
    Removes the specified node from a list and deletes it.
 */
-void delete_node_list(List* list, NodeList* node_list_ptr);
+void delete_node_list(List *list, NodeList *node_list_ptr);
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 /*
    Deletes a list and all of its nodes.
 */
-void delete_list(List* list);
+void delete_list(List *list);
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 /*
    Returns the length of the list.
 */
-int length_of_list(List* list);
+int length_of_list(List *list);
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
 /*
    Checks if list is empty.
 */
-bool is_list_empty(List* list);
+bool is_list_empty(List *list);
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 

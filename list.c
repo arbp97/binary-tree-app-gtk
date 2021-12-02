@@ -18,9 +18,9 @@ This program is free software: you can redistribute it and/or modify
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-List* create_list()
+List *create_list()
 {
-	List* new = (List*) malloc(sizeof(List));
+	List *new = (List *)malloc(sizeof(List));
 	new->head = NULL;
 	new->tail = NULL;
 
@@ -29,9 +29,9 @@ List* create_list()
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-NodeList* create_node_list(Data data_ptr)
+NodeList *create_node_list(Data data_ptr)
 {
-	NodeList* new = (NodeList*) malloc(sizeof(NodeList));
+	NodeList *new = (NodeList *)malloc(sizeof(NodeList));
 	new->data_ptr = data_ptr;
 	new->next = NULL;
 	new->prev = NULL;
@@ -41,9 +41,9 @@ NodeList* create_node_list(Data data_ptr)
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-void add_node_list(List* list, NodeList* node)
+void add_node_list(List *list, NodeList *node)
 {
-	if(is_list_empty(list))
+	if (is_list_empty(list))
 	{
 		/*
 			If the list is empty, the new node is added as head and tail,
@@ -54,7 +54,7 @@ void add_node_list(List* list, NodeList* node)
 	}
 	else
 	{
-		if(list->head == list->tail)
+		if (list->head == list->tail)
 		{
 			/*
 				If there is only one element, then the new node is added at the
@@ -72,20 +72,20 @@ void add_node_list(List* list, NodeList* node)
 				set the previous reference in the new node to point to the old tail,
 				set the next reference in this tail to point to our new tail.
 			*/
-			 node->prev = list->tail;
-			 list->tail->next = node;
-			 list->tail = node;
+			node->prev = list->tail;
+			list->tail->next = node;
+			list->tail = node;
 		}
 	}
 }
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-bool is_list_empty(List* list)
+bool is_list_empty(List *list)
 {
 	bool value = true;
 
-	if(list->head != NULL)
+	if (list->head != NULL)
 	{
 		value = false;
 	}
@@ -95,35 +95,35 @@ bool is_list_empty(List* list)
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-int length_of_list(List* list)
+int length_of_list(List *list)
 {
-	NodeList* temp = create_node_list(NULL);
-    temp = list->head;
-    int length=0;
+	NodeList *temp = create_node_list(NULL);
+	temp = list->head;
+	int length = 0;
 
-    while (temp != NULL)
-    {
-        length++;
-        temp = temp->next;
-    }
+	while (temp != NULL)
+	{
+		length++;
+		temp = temp->next;
+	}
 
 	free(temp);
 	temp = NULL;
 
-    return length;
+	return length;
 }
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-void delete_node_list(List* list, NodeList* node_list_ptr)
+void delete_node_list(List *list, NodeList *node_list_ptr)
 {
 	/*
 		the list has to have at least one element, and the node
 		has to be initialized.
 	*/
-	if((!is_list_empty(list) && (node_list_ptr != NULL)))
+	if ((!is_list_empty(list) && (node_list_ptr != NULL)))
 	{
-		if((node_list_ptr == list->head) && (list->head == list->tail))
+		if ((node_list_ptr == list->head) && (list->head == list->tail))
 		{
 			/*
 				if there is only one element, we just change the references
@@ -132,7 +132,7 @@ void delete_node_list(List* list, NodeList* node_list_ptr)
 			list->head = NULL;
 			list->tail = NULL;
 		}
-		else if(node_list_ptr == list->head)
+		else if (node_list_ptr == list->head)
 		{
 			/*
 				If the node is the head, then the next node is set to be
@@ -141,7 +141,7 @@ void delete_node_list(List* list, NodeList* node_list_ptr)
 			list->head = list->head->next;
 			list->head->prev = NULL;
 		}
-		else if(node_list_ptr == list->tail)
+		else if (node_list_ptr == list->tail)
 		{
 			/*
 				If the node is the last element of the list, we
@@ -167,14 +167,14 @@ void delete_node_list(List* list, NodeList* node_list_ptr)
 
 /* - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - */
 
-void delete_list(List* list)
+void delete_list(List *list)
 {
-	NodeList* cursor = create_node_list(NULL);
+	NodeList *cursor = create_node_list(NULL);
 
 	/*
 		auxPtr: used to get the next node after deleting the current cursor.
 	*/
-	NodeList* auxPtr = create_node_list(NULL);
+	NodeList *auxPtr = create_node_list(NULL);
 	cursor = list->head;
 
 	while (cursor != NULL)

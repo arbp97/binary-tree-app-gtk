@@ -219,7 +219,7 @@ void pre_order_show_tree(NodeTree *root)
 {
 	/*->pass through root<-*/
 	gtk_fixed_put(GTK_FIXED(FIXED_TOP_RIGHT),
-					root->widget, root->x_pos, root->y_pos);
+				  root->widget, root->x_pos, root->y_pos);
 
 	if (root->left)
 		pre_order_show_tree(root->left);
