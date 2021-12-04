@@ -133,6 +133,10 @@ it will apply the necessary rotations to balance it.
 */
 void balance(NodeTree **node);
 
+/*
+adjusts all nodes X,Y position relative to
+the root position
+*/
 void adjust_tree_position(NodeTree **root);
 
 NodeTree *rotate_right(NodeTree *node);
@@ -142,7 +146,5 @@ NodeTree *rotate_left(NodeTree *node);
 NodeTree *rotate_right_left(NodeTree *node);
 
 NodeTree *rotate_left_right(NodeTree *node);
-
-
 
 #endif //_TREE_H_

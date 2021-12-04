@@ -54,7 +54,6 @@ bool add_node_tree(Tree *tree, int data)
 	tree->root->y_pos = ROOT_WIDGET_POS_Y;
 
 	adjust_tree_position(&tree->root);
-	printf("\n\n\n");
 
 	return result;
 }
@@ -72,8 +71,6 @@ bool push_node_tree(NodeTree **root, NodeTree *new_node)
 		if (!(*root)->left)
 		{
 			(*root)->left = new_node;
-			(*root)->left->x_pos = (*root)->x_pos - 50;
-			(*root)->left->y_pos = (*root)->y_pos + 50;
 			(*root)->left->height = 1 + fmax(height(new_node->left), height(new_node->right));
 
 			result = true;
@@ -94,8 +91,6 @@ bool push_node_tree(NodeTree **root, NodeTree *new_node)
 		if (!(*root)->right)
 		{
 			(*root)->right = new_node;
-			(*root)->right->x_pos = (*root)->x_pos + 50;
-			(*root)->right->y_pos = (*root)->y_pos + 50;
 			(*root)->right->height = 1 + fmax(height(new_node->left), height(new_node->right));
 
 			result = true;
@@ -325,7 +320,7 @@ int height(NodeTree *node)
 {
 	int height;
 
-	if(node)
+	if (node)
 		height = node->height;
 	else
 		height = -1;
@@ -337,7 +332,7 @@ int get_balance(NodeTree *node)
 {
 	int balance;
 
-	if(node)
+	if (node)
 		balance = height(node->left) - height(node->right);
 	else
 		balance = 0;
@@ -351,14 +346,14 @@ void balance(NodeTree **node)
 
 	if (balance > AVL_THRESHOLD)
 	{
-		if(get_balance((*node)->left) >= 0)
+		if (get_balance((*node)->left) >= 0)
 			*node = rotate_right(*node);
 		else
 			*node = rotate_left_right(*node);
 	}
-	else if(balance < -AVL_THRESHOLD)
+	else if (balance < -AVL_THRESHOLD)
 	{
-		if(get_balance((*node)->right) <= 0)
+		if (get_balance((*node)->right) <= 0)
 			*node = rotate_left(*node);
 		else
 			*node = rotate_right_left(*node);
@@ -367,21 +362,47 @@ void balance(NodeTree **node)
 
 void adjust_tree_position(NodeTree **root)
 {
-	if ((*root)->left)
+	if ((*root)->x_pos == ROOT_WIDGET_POS_X &&
+		(*root)->y_pos == ROOT_WIDGET_POS_Y)
 	{
-		(*root)->left->x_pos = (*root)->x_pos - 50;
-		(*root)->left->y_pos = (*root)->y_pos + 50;
+		/*
+		special one time setting adding more space
+		between the original node's sub trees, to
+		partially overcome overlapping widgets.
+		*/
+		if ((*root)->left)
+		{
+			(*root)->left->x_pos = (*root)->x_pos - 150;
+			(*root)->left->y_pos = (*root)->y_pos + 50;
 
-		adjust_tree_position(&(*root)->left);
+			adjust_tree_position(&(*root)->left);
+		}
+		if ((*root)->right)
+		{
+			(*root)->right->x_pos = (*root)->x_pos + 150;
+			(*root)->right->y_pos = (*root)->y_pos + 50;
+
+			adjust_tree_position(&(*root)->right);
+		}
 	}
-	if((*root)->right)
+	else
 	{
-		(*root)->right->x_pos = (*root)->x_pos + 50;
-		(*root)->right->y_pos = (*root)->y_pos + 50;
+		if ((*root)->left)
+		{
+			(*root)->left->x_pos = (*root)->x_pos - 50;
+			(*root)->left->y_pos = (*root)->y_pos + 50;
 
-		adjust_tree_position(&(*root)->right);
+			adjust_tree_position(&(*root)->left);
+		}
+
+		if ((*root)->right)
+		{
+			(*root)->right->x_pos = (*root)->x_pos + 50;
+			(*root)->right->y_pos = (*root)->y_pos + 50;
+
+			adjust_tree_position(&(*root)->right);
+		}
 	}
-	printf("\nNODE %i X: %i Y: %i", (*root)->data, (*root)->x_pos, (*root)->y_pos);
 }
 
 NodeTree *rotate_right(NodeTree *node)

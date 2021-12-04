@@ -134,7 +134,7 @@ void on_button_2_clicked(GtkButton *b, GtkSpinButton *s)
         /* Adding the new node to the selected tree */
         if (add_node_tree(selected_tree, spin_value))
         {
-            if(selected_tree->root->data != selected_row_tree_root)
+            if (selected_tree->root->data != selected_row_tree_root)
             {
                 /*
                 if the root changed (because of balancing), then
@@ -254,6 +254,8 @@ void on_button_6_clicked(GtkButton *b)
         console_log("ERROR: no tree selected", TEXT_BUFFER_BOTTOM_LEFT, true);
     else
     {
+        clear_viewport();
+
         GtkWidget *label = gtk_bin_get_child(GTK_BIN(selected_row));
         char tmp[32];
         int selected_tree_root = atoi(gtk_label_get_text(GTK_LABEL(label)));
@@ -321,6 +323,11 @@ void on_list_selected_rows_changed(GtkListBox *l, GtkListBoxRow *r)
 
     if (row)
     {
+        /*
+        this if statement exists because when you delete
+        a tree, it updates the list and sends a signal to
+        this handler. In that case the row would not exist.
+        */
         GtkWidget *label = gtk_bin_get_child(GTK_BIN(row));
         int selected_tree_root = atoi(gtk_label_get_text(GTK_LABEL(label)));
 
@@ -330,8 +337,6 @@ void on_list_selected_rows_changed(GtkListBox *l, GtkListBoxRow *r)
 
         console_log(tmp, TEXT_BUFFER_BOTTOM_LEFT, true);
     }
-
-    /* clearing the viewport */
 
     clear_viewport();
 }
