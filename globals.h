@@ -70,4 +70,7 @@ typedef enum Arrangement
 static int ROOT_WIDGET_POS_X = 220;
 static int ROOT_WIDGET_POS_Y = 0;
 
+// balance tolerance of an AVL tree
+static int AVL_THRESHOLD = 1;
+
 #endif // !_GLOBALS_H_

@@ -22,6 +22,7 @@ This program is free software: you can redistribute it and/or modify
 #include <stdlib.h>
 #include <stdbool.h>
 #include "events.h"
+#include <math.h>
 
 /*
   widget: representation of the node in the viewport
@@ -29,7 +30,13 @@ This program is free software: you can redistribute it and/or modify
 */
 typedef struct NodeTree
 {
+  /*
+  height: stores the 'depth' of the node
+  x_pos: horizontal position in viewport
+  y_pos: vertical position in viewport
+  */
   int data;
+  int height;
   GtkWidget *widget;
   gint x_pos;
   gint y_pos;
@@ -65,7 +72,7 @@ bool add_node_tree(Tree *tree, int data);
     less than root (as in the root of any of the nodes),
     to the left, more than root, to the right
 */
-bool push_node_tree(NodeTree *root, NodeTree *new_node);
+bool push_node_tree(NodeTree **root, NodeTree *new_node);
 
 /*
   Searches for the specified data in the tree. returns
@@ -109,5 +116,33 @@ void pre_order(NodeTree *root);
 void in_order(NodeTree *root);
 
 void post_order(NodeTree *root);
+
+/******************************************************************************/
+
+// AVL Operations
+
+// returns the height of a node
+int height(NodeTree *node);
+
+// returns the balance of a node in respect to its children
+int get_balance(NodeTree *node);
+
+/*
+checks the balance of a node. if its unbalanced,
+it will apply the necessary rotations to balance it.
+*/
+void balance(NodeTree **node);
+
+void adjust_tree_position(NodeTree **root);
+
+NodeTree *rotate_right(NodeTree *node);
+
+NodeTree *rotate_left(NodeTree *node);
+
+NodeTree *rotate_right_left(NodeTree *node);
+
+NodeTree *rotate_left_right(NodeTree *node);
+
+
 
 #endif //_TREE_H_

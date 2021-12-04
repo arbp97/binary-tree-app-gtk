@@ -133,7 +133,20 @@ void on_button_2_clicked(GtkButton *b, GtkSpinButton *s)
 
         /* Adding the new node to the selected tree */
         if (add_node_tree(selected_tree, spin_value))
-            console_log("Node Added to tree", TEXT_BUFFER_BOTTOM_LEFT, true);
+        {
+            if(selected_tree->root->data != selected_row_tree_root)
+            {
+                /*
+                if the root changed (because of balancing), then
+                it's label in the list needs to be changed also.
+                */
+                char tmp[10];
+                sprintf(tmp, "%i", selected_tree->root->data);
+                gtk_label_set_text(GTK_LABEL(selected_row_label), tmp);
+            }
+
+            console_log("Added node successfully", TEXT_BUFFER_BOTTOM_LEFT, true);
+        }
         else
             console_log("ERROR: node was not created: node already exists", TEXT_BUFFER_BOTTOM_LEFT, true);
     }

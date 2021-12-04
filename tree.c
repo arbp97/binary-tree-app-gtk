@@ -30,8 +30,10 @@ NodeTree *create_node_tree(int data)
 {
 	NodeTree *new = malloc(sizeof(NodeTree));
 	new->data = data;
+	new->height = 0;
 	new->left = NULL;
 	new->right = NULL;
+
 	char tmp[10];
 	sprintf(tmp, "%i", data);
 	new->widget = gtk_button_new_with_label(tmp);
@@ -44,52 +46,65 @@ NodeTree *create_node_tree(int data)
 bool add_node_tree(Tree *tree, int data)
 {
 	NodeTree *new_node = create_node_tree(data);
+	bool result;
 
-	return push_node_tree(tree->root, new_node);
+	result = push_node_tree(&tree->root, new_node);
+
+	tree->root->x_pos = ROOT_WIDGET_POS_X;
+	tree->root->y_pos = ROOT_WIDGET_POS_Y;
+
+	adjust_tree_position(&tree->root);
+	printf("\n\n\n");
+
+	return result;
 }
 
-bool push_node_tree(NodeTree *root, NodeTree *new_node)
+bool push_node_tree(NodeTree **root, NodeTree *new_node)
 {
 	bool result;
 
 	/* If the new node is less than root node, then we
 		put it to the left*/
-	if (new_node->data < root->data)
+	if (new_node->data < (*root)->data)
 	{
 		/* If the left node has not been set, then
 			new node occupies it's place*/
-		if (!root->left)
+		if (!(*root)->left)
 		{
-			root->left = new_node;
-			root->left->x_pos = root->x_pos - 50;
-			root->left->y_pos = root->y_pos + 50;
+			(*root)->left = new_node;
+			(*root)->left->x_pos = (*root)->x_pos - 50;
+			(*root)->left->y_pos = (*root)->y_pos + 50;
+			(*root)->left->height = 1 + fmax(height(new_node->left), height(new_node->right));
+
 			result = true;
 		}
 		else
 		{
 			/* If the left node has been set, then we have to search
 				again, in left node's sub tree */
-			result = push_node_tree(root->left, new_node);
+			result = push_node_tree(&(*root)->left, new_node);
 		}
 	}
 	/* If the new node is greater than root node, then we
 		put it to the right*/
-	else if (new_node->data > root->data)
+	else if (new_node->data > (*root)->data)
 	{
 		/* If the right node has not been set, then
 			new node occupies it's place*/
-		if (!root->right)
+		if (!(*root)->right)
 		{
-			root->right = new_node;
-			root->right->x_pos = root->x_pos + 50;
-			root->right->y_pos = root->y_pos + 50;
+			(*root)->right = new_node;
+			(*root)->right->x_pos = (*root)->x_pos + 50;
+			(*root)->right->y_pos = (*root)->y_pos + 50;
+			(*root)->right->height = 1 + fmax(height(new_node->left), height(new_node->right));
+
 			result = true;
 		}
 		else
 		{
 			/* If the right node has been set, then we have to search
 				again, in right node's sub tree */
-			result = push_node_tree(root->right, new_node);
+			result = push_node_tree(&(*root)->right, new_node);
 		}
 	}
 	else
@@ -101,6 +116,10 @@ bool push_node_tree(NodeTree *root, NodeTree *new_node)
 		new_node = NULL;
 		result = false;
 	}
+
+	(*root)->height = 1 + fmax(height((*root)->left), height((*root)->right));
+
+	balance(&(*root));
 
 	return result;
 }
@@ -300,4 +319,112 @@ void delete_tree(Tree *tree)
 
 	free(tree);
 	tree = NULL;
+}
+
+int height(NodeTree *node)
+{
+	int height;
+
+	if(node)
+		height = node->height;
+	else
+		height = -1;
+
+	return height;
+}
+
+int get_balance(NodeTree *node)
+{
+	int balance;
+
+	if(node)
+		balance = height(node->left) - height(node->right);
+	else
+		balance = 0;
+
+	return balance;
+}
+
+void balance(NodeTree **node)
+{
+	int balance = get_balance(*node);
+
+	if (balance > AVL_THRESHOLD)
+	{
+		if(get_balance((*node)->left) >= 0)
+			*node = rotate_right(*node);
+		else
+			*node = rotate_left_right(*node);
+	}
+	else if(balance < -AVL_THRESHOLD)
+	{
+		if(get_balance((*node)->right) <= 0)
+			*node = rotate_left(*node);
+		else
+			*node = rotate_right_left(*node);
+	}
+}
+
+void adjust_tree_position(NodeTree **root)
+{
+	if ((*root)->left)
+	{
+		(*root)->left->x_pos = (*root)->x_pos - 50;
+		(*root)->left->y_pos = (*root)->y_pos + 50;
+
+		adjust_tree_position(&(*root)->left);
+	}
+	if((*root)->right)
+	{
+		(*root)->right->x_pos = (*root)->x_pos + 50;
+		(*root)->right->y_pos = (*root)->y_pos + 50;
+
+		adjust_tree_position(&(*root)->right);
+	}
+	printf("\nNODE %i X: %i Y: %i", (*root)->data, (*root)->x_pos, (*root)->y_pos);
+}
+
+NodeTree *rotate_right(NodeTree *node)
+{
+	NodeTree *temp = node->left;
+
+	node->left = temp->right;
+	temp->right = node;
+
+	node->height = 1 + fmax(height(node->left), height(node->right));
+	temp->height = 1 + fmax(height(temp->left), height(temp->right));
+
+	return temp;
+}
+
+NodeTree *rotate_left(NodeTree *node)
+{
+	NodeTree *temp = node->right;
+
+	node->right = temp->left;
+	temp->left = node;
+
+	node->height = 1 + fmax(height(node->left), height(node->right));
+	temp->height = 1 + fmax(height(temp->left), height(temp->right));
+
+	return temp;
+}
+
+NodeTree *rotate_right_left(NodeTree *node)
+{
+	NodeTree *temp;
+
+	node->right = rotate_right(node->right);
+
+	temp = rotate_left(node);
+	return temp;
+}
+
+NodeTree *rotate_left_right(NodeTree *node)
+{
+	NodeTree *temp;
+	node->left = rotate_left(node->left);
+	temp = rotate_right(node);
+
+	return temp;
 }
