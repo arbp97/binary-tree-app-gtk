@@ -275,6 +275,11 @@ void on_button_about_clicked(GtkButton *b)
     gtk_widget_show_all(ABOUT_WINDOW);
 }
 
+void on_button_about_close_clicked(GtkButton *b)
+{
+    gtk_widget_hide(ABOUT_WINDOW);
+}
+
 void on_list_selected_rows_changed(GtkListBox *l, GtkListBoxRow *r)
 {
 
