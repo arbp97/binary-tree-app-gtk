@@ -16,7 +16,7 @@ This program is free software: you can redistribute it and/or modify
 #ifndef _GLOBALS_H_
 #define _GLOBALS_H_
 
-#include <gtk/gtk.h>
+#include "includes.h"
 #include "list.h"
 #pragma once
 

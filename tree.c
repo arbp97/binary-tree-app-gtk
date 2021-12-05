@@ -15,6 +15,7 @@ This program is free software: you can redistribute it and/or modify
 */
 
 #include "tree.h"
+#include "util.h"
 
 Tree *create_tree(int data)
 {
@@ -227,20 +228,6 @@ NodeTree *pre_order_search(NodeTree *root, int data, NodeTree *result)
 	return result;
 }
 
-void pre_order_show_tree(NodeTree *root, GtkWidget *viewport)
-{
-	adjust_tree_position(&root);
-
-	gtk_fixed_put(GTK_FIXED(viewport),
-				  root->widget, root->x_pos, root->y_pos);
-
-	if (root->left)
-		pre_order_show_tree(root->left, viewport);
-
-	if (root->right)
-		pre_order_show_tree(root->right, viewport);
-}
-
 Tree *find_tree_list(struct List *list, int tree_root)
 {
 	//node to go over the list
@@ -356,51 +343,6 @@ void balance(NodeTree **node)
 			*node = rotate_left(*node);
 		else
 			*node = rotate_right_left(*node);
-	}
-}
-
-void adjust_tree_position(NodeTree **root)
-{
-	if ((*root)->x_pos == ROOT_WIDGET_POS_X &&
-		(*root)->y_pos == ROOT_WIDGET_POS_Y)
-	{
-		/*
-		special one time setting adding more space
-		between the original node's sub trees, to
-		partially overcome overlapping widgets.
-		*/
-		if ((*root)->left)
-		{
-			(*root)->left->x_pos = (*root)->x_pos - 150;
-			(*root)->left->y_pos = (*root)->y_pos + 50;
-
-			adjust_tree_position(&(*root)->left);
-		}
-		if ((*root)->right)
-		{
-			(*root)->right->x_pos = (*root)->x_pos + 150;
-			(*root)->right->y_pos = (*root)->y_pos + 50;
-
-			adjust_tree_position(&(*root)->right);
-		}
-	}
-	else
-	{
-		if ((*root)->left)
-		{
-			(*root)->left->x_pos = (*root)->x_pos - 50;
-			(*root)->left->y_pos = (*root)->y_pos + 50;
-
-			adjust_tree_position(&(*root)->left);
-		}
-
-		if ((*root)->right)
-		{
-			(*root)->right->x_pos = (*root)->x_pos + 50;
-			(*root)->right->y_pos = (*root)->y_pos + 50;
-
-			adjust_tree_position(&(*root)->right);
-		}
 	}
 }
 

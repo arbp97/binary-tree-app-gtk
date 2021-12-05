@@ -16,37 +16,6 @@ This program is free software: you can redistribute it and/or modify
 
 #include "events.h"
 
-void console_log(const gchar *text, GtkWidget *buffer, bool newline)
-{
-    char tmp[strlen(text) + 1];
-    GtkTextIter end;
-
-    gtk_text_buffer_get_end_iter(GTK_TEXT_BUFFER(buffer), &end);
-
-    if (newline)
-        sprintf(tmp, "\n%s", text);
-    else
-        sprintf(tmp, "%s", text);
-
-    gtk_text_buffer_insert(
-        GTK_TEXT_BUFFER(buffer),
-        &end, tmp, strlen(tmp));
-}
-
-void clear_viewport(GtkWidget* viewport)
-{
-    GList *children, *iter;
-
-    children = gtk_container_get_children(GTK_CONTAINER(viewport));
-
-    for (iter = children; iter != NULL; iter = g_list_next(iter))
-        gtk_container_remove(GTK_CONTAINER(viewport), g_object_ref(iter->data));
-
-    g_list_free(children);
-
-    gtk_widget_show_all(viewport);
-}
-
 void on_button_1_clicked(GtkButton *b, GtkSpinButton *s)
 {
     // new tree root value
@@ -152,53 +121,6 @@ void on_button_2_clicked(GtkButton *b, GtkSpinButton *s)
     }
 }
 
-void show_tree_arrangement_on_buffer(GtkListBoxRow *selected_row, Arrangement arrangement, GtkWidget *buffer)
-{
-    /*
-        Shows the current nodes of the tree in the text area used for that arrangement.
-        NOTICE: the buffer argument actually doesn't assure that
-        the data will be written in it. The *_order functions in
-        tree have fixed buffers to write to... #FIXME
-    */
-
-    // get child out of the selected row, a label
-    GtkWidget *selected_row_label =
-        gtk_bin_get_child(GTK_BIN(selected_row));
-
-    // get the tree root out of the label
-    int selected_row_tree_root =
-        atoi(gtk_label_get_text(GTK_LABEL(selected_row_label)));
-
-    // finally, find the tree with that root
-    Tree *selected_tree = find_tree_list(TREE_LIST, selected_row_tree_root);
-
-    // iterators to clear the text buffer
-    GtkTextIter start, end;
-
-    // get start and end points of said buffer
-    gtk_text_buffer_get_start_iter(GTK_TEXT_BUFFER(buffer), &start);
-    gtk_text_buffer_get_end_iter(GTK_TEXT_BUFFER(buffer), &end);
-
-    // clears buffer
-    gtk_text_buffer_delete(GTK_TEXT_BUFFER(buffer), &start, &end);
-
-    // prints the tree in specified arrangement
-    switch (arrangement)
-    {
-    case PRE_ORDER:
-        pre_order(selected_tree->root);
-        break;
-    case IN_ORDER:
-        in_order(selected_tree->root);
-        break;
-    case POST_ORDER:
-        post_order(selected_tree->root);
-        break;
-    default:
-        break;
-    }
-}
-
 void on_button_3_clicked(GtkButton *b)
 {
     GtkListBoxRow *selected_row =
@@ -267,7 +189,7 @@ void on_button_6_clicked(GtkButton *b)
 
         selected_tree->root->x_pos = ROOT_WIDGET_POS_X;
 
-        pre_order_show_tree(selected_tree->root, FIXED_TOP_RIGHT);
+        render_tree(selected_tree->root, FIXED_TOP_RIGHT);
 
         gtk_widget_show_all(FIXED_TOP_RIGHT);
     }
@@ -337,7 +259,7 @@ void on_button_tree_view_clicked(GtkButton *b)
 
         selected_tree->root->x_pos = ROOT_WIDGET_POS_X;
 
-        pre_order_show_tree(selected_tree->root, FIXED_TREE_VIEW);
+        render_tree(selected_tree->root, FIXED_TREE_VIEW);
 
         gtk_widget_show_all(TREE_WINDOW);
         gtk_window_set_resizable(GTK_WINDOW(TREE_WINDOW), true);
@@ -383,24 +305,4 @@ gboolean on_widget_deleted(GtkWidget *widget, GdkEvent *event, gpointer data)
     gtk_widget_hide(widget);
     ROOT_WIDGET_POS_X = INTERNAL_VIEWPORT_POS_X;
     return TRUE;
-}
-
-gint get_screen_width()
-{
-	GdkRectangle workarea = {0};
-	gdk_monitor_get_workarea(
-		gdk_display_get_primary_monitor(gdk_display_get_default()),
-		&workarea);
-
-	return workarea.width;
-}
-
-gint get_screen_height()
-{
-	GdkRectangle workarea = {0};
-	gdk_monitor_get_workarea(
-		gdk_display_get_primary_monitor(gdk_display_get_default()),
-		&workarea);
-
-	return workarea.height;
 }

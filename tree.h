@@ -18,11 +18,7 @@ This program is free software: you can redistribute it and/or modify
 #define _TREE_H_
 #pragma once
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#include "events.h"
-#include <math.h>
+#include "globals.h"
 
 /*
   widget: representation of the node in the viewport
@@ -100,11 +96,6 @@ void post_order_delete(NodeTree *root);
 NodeTree *pre_order_search(NodeTree *root, int data, NodeTree *result);
 
 /*
-  "Draw" tree nodes into the viewport
-*/
-void pre_order_show_tree(NodeTree *root, GtkWidget *viewport);
-
-/*
   finds a tree with the same root
 */
 Tree *find_tree_list(struct List *list, int tree_root);
@@ -134,12 +125,6 @@ checks the balance of a node. if its unbalanced,
 it will apply the necessary rotations to balance it.
 */
 void balance(NodeTree **node);
-
-/*
-adjusts all nodes X,Y position relative to
-the root position
-*/
-void adjust_tree_position(NodeTree **root);
 
 NodeTree *rotate_right(NodeTree *node);
 

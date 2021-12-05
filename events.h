@@ -20,29 +20,13 @@ This program is free software: you can redistribute it and/or modify
 
 #include "globals.h"
 #include "tree.h"
-#include "list.h"
-#include <sys/types.h>
-#include <signal.h>
-#include <unistd.h>
-#include <string.h>
-#include <gtk/gtkx.h>
-#include <math.h>
-#include <ctype.h>
-
-// write to console in app
-void console_log(const gchar *text, GtkWidget *buffer, bool newline);
-
-/* removes all widgets from the the top right container*/
-void clear_viewport(GtkWidget* viewport);
+#include "util.h"
 
 /* Create new tree */
 void on_button_1_clicked(GtkButton *b, GtkSpinButton *s);
 
 /* Inserts new node in selected tree*/
 void on_button_2_clicked(GtkButton *b, GtkSpinButton *s);
-
-/* prints tree in specified buffer and arrangement*/
-void show_tree_arrangement_on_buffer(GtkListBoxRow *selected_row, Arrangement arrangement, GtkWidget *buffer);
 
 /* Prints the selected tree in pre order */
 void on_button_3_clicked(GtkButton *b);
@@ -67,11 +51,5 @@ void on_list_selected_rows_changed(GtkListBox *l, GtkListBoxRow *r);
 
 /* Used to hide the tree view window instead of destroying it*/
 gboolean on_widget_deleted(GtkWidget *widget, GdkEvent *event, gpointer data);
-
-// Get usable height of the default monitor
-gint get_screen_height();
-
-// Get usable width of the default monitor
-gint get_screen_width();
 
 #endif // !_EVENTS_H_

@@ -14,7 +14,6 @@ This program is free software: you can redistribute it and/or modify
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-#include <stdlib.h>
 #include "events.h"
 
 GtkWidget *MAIN_WINDOW;
