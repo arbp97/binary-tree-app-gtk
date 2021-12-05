@@ -24,6 +24,7 @@ This program is free software: you can redistribute it and/or modify
 
 extern GtkWidget *MAIN_WINDOW;
 extern GtkWidget *TREE_WINDOW;
+extern GtkWidget *ABOUT_WINDOW;
 extern GtkWidget *MAIN_CONTAINER;
 extern GtkWidget *CONTAINER_TOP_LEFT;
 extern GtkWidget *CONTAINER_TOP_RIGHT;

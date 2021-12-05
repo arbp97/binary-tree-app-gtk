@@ -18,6 +18,7 @@ This program is free software: you can redistribute it and/or modify
 
 GtkWidget *MAIN_WINDOW;
 GtkWidget *TREE_WINDOW;
+GtkWidget *ABOUT_WINDOW;
 GtkWidget *MAIN_CONTAINER;
 GtkWidget *CONTAINER_TOP_LEFT;
 GtkWidget *CONTAINER_TOP_RIGHT;
@@ -69,9 +70,11 @@ int main(int argc, char *argv[])
 
 	MAIN_WINDOW = GTK_WIDGET(gtk_builder_get_object(BUILDER, "main-window"));
 	TREE_WINDOW = GTK_WIDGET(gtk_builder_get_object(BUILDER, "tree-window"));
+	ABOUT_WINDOW = GTK_WIDGET(gtk_builder_get_object(BUILDER, "about-window"));
 
 	g_signal_connect(MAIN_WINDOW, "destroy", G_CALLBACK(gtk_main_quit), NULL);
 	g_signal_connect(TREE_WINDOW, "delete-event", G_CALLBACK(on_widget_deleted), NULL);
+	g_signal_connect(ABOUT_WINDOW, "delete-event", G_CALLBACK(on_widget_deleted), NULL);
 
 	gtk_builder_connect_signals(BUILDER, NULL);
 

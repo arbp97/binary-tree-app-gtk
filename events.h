@@ -46,6 +46,8 @@ void on_button_7_clicked(GtkButton *b);
 /* Shows the dedicated tree view window*/
 void on_button_tree_view_clicked(GtkButton *b);
 
+void on_button_about_clicked(GtkButton *b);
+
 /* Logs when the selected tree changes */
 void on_list_selected_rows_changed(GtkListBox *l, GtkListBoxRow *r);
 

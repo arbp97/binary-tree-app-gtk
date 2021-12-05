@@ -187,6 +187,8 @@ void on_button_6_clicked(GtkButton *b)
 
         Tree *selected_tree = find_tree_list(TREE_LIST, selected_tree_root);
 
+        ROOT_WIDGET_POS_X = INTERNAL_VIEWPORT_POS_X;
+
         selected_tree->root->x_pos = ROOT_WIDGET_POS_X;
 
         render_tree(selected_tree->root, FIXED_TOP_RIGHT);
@@ -268,6 +270,11 @@ void on_button_tree_view_clicked(GtkButton *b)
     }
 }
 
+void on_button_about_clicked(GtkButton *b)
+{
+    gtk_widget_show_all(ABOUT_WINDOW);
+}
+
 void on_list_selected_rows_changed(GtkListBox *l, GtkListBoxRow *r)
 {
 
@@ -303,6 +310,5 @@ void on_list_selected_rows_changed(GtkListBox *l, GtkListBoxRow *r)
 gboolean on_widget_deleted(GtkWidget *widget, GdkEvent *event, gpointer data)
 {
     gtk_widget_hide(widget);
-    ROOT_WIDGET_POS_X = INTERNAL_VIEWPORT_POS_X;
     return TRUE;
 }
