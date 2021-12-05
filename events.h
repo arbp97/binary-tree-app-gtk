@@ -33,7 +33,7 @@ This program is free software: you can redistribute it and/or modify
 void console_log(const gchar *text, GtkWidget *buffer, bool newline);
 
 /* removes all widgets from the the top right container*/
-void clear_viewport();
+void clear_viewport(GtkWidget* viewport);
 
 /* Create new tree */
 void on_button_1_clicked(GtkButton *b, GtkSpinButton *s);
@@ -59,7 +59,19 @@ void on_button_6_clicked(GtkButton *b);
 /* deletes selected tree and clears the viewport */
 void on_button_7_clicked(GtkButton *b);
 
+/* Shows the dedicated tree view window*/
+void on_button_tree_view_clicked(GtkButton *b);
+
 /* Logs when the selected tree changes */
 void on_list_selected_rows_changed(GtkListBox *l, GtkListBoxRow *r);
+
+/* Used to hide the tree view window instead of destroying it*/
+gboolean on_widget_deleted(GtkWidget *widget, GdkEvent *event, gpointer data);
+
+// Get usable height of the default monitor
+gint get_screen_height();
+
+// Get usable width of the default monitor
+gint get_screen_width();
 
 #endif // !_EVENTS_H_

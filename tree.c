@@ -53,8 +53,6 @@ bool add_node_tree(Tree *tree, int data)
 	tree->root->x_pos = ROOT_WIDGET_POS_X;
 	tree->root->y_pos = ROOT_WIDGET_POS_Y;
 
-	adjust_tree_position(&tree->root);
-
 	return result;
 }
 
@@ -229,17 +227,18 @@ NodeTree *pre_order_search(NodeTree *root, int data, NodeTree *result)
 	return result;
 }
 
-void pre_order_show_tree(NodeTree *root)
+void pre_order_show_tree(NodeTree *root, GtkWidget *viewport)
 {
-	/*->pass through root<-*/
-	gtk_fixed_put(GTK_FIXED(FIXED_TOP_RIGHT),
+	adjust_tree_position(&root);
+
+	gtk_fixed_put(GTK_FIXED(viewport),
 				  root->widget, root->x_pos, root->y_pos);
 
 	if (root->left)
-		pre_order_show_tree(root->left);
+		pre_order_show_tree(root->left, viewport);
 
 	if (root->right)
-		pre_order_show_tree(root->right);
+		pre_order_show_tree(root->right, viewport);
 }
 
 Tree *find_tree_list(struct List *list, int tree_root)

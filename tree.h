@@ -32,8 +32,10 @@ typedef struct NodeTree
 {
   /*
   height: stores the 'depth' of the node
-  x_pos: horizontal position in viewport
-  y_pos: vertical position in viewport
+  x_pos: horizontal position in viewport **
+  y_pos: vertical position in viewport **
+
+  **set when showing tree, using adjust_position
   */
   int data;
   int height;
@@ -100,7 +102,7 @@ NodeTree *pre_order_search(NodeTree *root, int data, NodeTree *result);
 /*
   "Draw" tree nodes into the viewport
 */
-void pre_order_show_tree(NodeTree *root);
+void pre_order_show_tree(NodeTree *root, GtkWidget *viewport);
 
 /*
   finds a tree with the same root

@@ -42,6 +42,11 @@ This program is free software: you can redistribute it and/or modify
   <object class="GtkTextBuffer" id="button-4-buffer"/>
   <object class="GtkTextBuffer" id="button-5-buffer"/>
   <object class="GtkTextBuffer" id="console-text-buffer"/>
+  <object class="GtkImage" id="image1">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="stock">gtk-zoom-fit</property>
+  </object>
   <object class="GtkWindow" id="main-window">
     <property name="can-focus">False</property>
     <property name="title" translatable="yes">BTree View</property>
@@ -50,383 +55,552 @@ This program is free software: you can redistribute it and/or modify
     <property name="default-height">600</property>
     <property name="icon">res/btree-view.png</property>
     <child>
-      <object class="GtkFlowBox" id="main-container">
+      <object class="GtkBox">
         <property name="visible">True</property>
         <property name="can-focus">False</property>
-        <property name="max-children-per-line">2</property>
-        <property name="selection-mode">none</property>
+        <property name="orientation">vertical</property>
         <child>
-          <object class="GtkFlowBoxChild" id="container-top-left">
-            <property name="width-request">100</property>
+          <object class="GtkMenuBar">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
             <child>
-              <object class="GtkScrolledWindow" id="scrolled-top-left">
+              <object class="GtkMenuItem">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
-                <property name="shadow-type">in</property>
-                <child>
-                  <object class="GtkViewport" id="view-top-left">
+                <property name="label" translatable="yes">_File</property>
+                <property name="use-underline">True</property>
+                <child type="submenu">
+                  <object class="GtkMenu">
                     <property name="visible">True</property>
                     <property name="can-focus">False</property>
                     <child>
-                      <!-- n-columns=2 n-rows=6 -->
-                      <object class="GtkGrid" id="grid-top-left">
+                      <object class="GtkImageMenuItem">
+                        <property name="label">gtk-new</property>
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="row-spacing">10</property>
-                        <property name="column-spacing">10</property>
-                        <property name="row-homogeneous">True</property>
-                        <property name="column-homogeneous">True</property>
-                        <child>
-                          <object class="GtkButton" id="button-1">
-                            <property name="label" translatable="yes">Create new tree</property>
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="receives-default">True</property>
-                            <signal name="clicked" handler="on_button_1_clicked" object="spin-button-1" swapped="no"/>
-                          </object>
-                          <packing>
-                            <property name="left-attach">0</property>
-                            <property name="top-attach">0</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkButton" id="button-3">
-                            <property name="label" translatable="yes">Arrange in pre order</property>
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="receives-default">True</property>
-                            <signal name="clicked" handler="on_button_3_clicked" swapped="no"/>
-                          </object>
-                          <packing>
-                            <property name="left-attach">0</property>
-                            <property name="top-attach">2</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkButton" id="button-4">
-                            <property name="label" translatable="yes">Arrange in order</property>
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="receives-default">True</property>
-                            <signal name="clicked" handler="on_button_4_clicked" swapped="no"/>
-                          </object>
-                          <packing>
-                            <property name="left-attach">0</property>
-                            <property name="top-attach">3</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkButton" id="button-5">
-                            <property name="label" translatable="yes">Arrange in post order</property>
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="receives-default">True</property>
-                            <signal name="clicked" handler="on_button_5_clicked" swapped="no"/>
-                          </object>
-                          <packing>
-                            <property name="left-attach">0</property>
-                            <property name="top-attach">4</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkSpinButton" id="spin-button-1">
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="adjustment">adjustment-spin-1</property>
-                          </object>
-                          <packing>
-                            <property name="left-attach">1</property>
-                            <property name="top-attach">0</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkSpinButton" id="spin-button-2">
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="adjustment">adjustment-spin-2</property>
-                          </object>
-                          <packing>
-                            <property name="left-attach">1</property>
-                            <property name="top-attach">1</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkButton" id="button-2">
-                            <property name="label" translatable="yes">Insert node</property>
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="receives-default">True</property>
-                            <signal name="clicked" handler="on_button_2_clicked" object="spin-button-2" swapped="no"/>
-                          </object>
-                          <packing>
-                            <property name="left-attach">0</property>
-                            <property name="top-attach">1</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkScrolledWindow" id="scrolled-button-3">
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="shadow-type">in</property>
-                            <child>
-                              <object class="GtkViewport" id="view-button-3">
-                                <property name="visible">True</property>
-                                <property name="can-focus">False</property>
-                                <child>
-                                  <object class="GtkTextView" id="text-button-3">
-                                    <property name="visible">True</property>
-                                    <property name="can-focus">True</property>
-                                    <property name="editable">False</property>
-                                    <property name="buffer">button-3-buffer</property>
-                                    <property name="accepts-tab">False</property>
-                                    <property name="monospace">True</property>
-                                  </object>
-                                </child>
-                              </object>
-                            </child>
-                          </object>
-                          <packing>
-                            <property name="left-attach">1</property>
-                            <property name="top-attach">2</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkScrolledWindow" id="scrolled-button-4">
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="shadow-type">in</property>
-                            <child>
-                              <object class="GtkViewport" id="view-button-4">
-                                <property name="visible">True</property>
-                                <property name="can-focus">False</property>
-                                <child>
-                                  <object class="GtkTextView" id="text-button-4">
-                                    <property name="visible">True</property>
-                                    <property name="can-focus">True</property>
-                                    <property name="editable">False</property>
-                                    <property name="buffer">button-4-buffer</property>
-                                    <property name="accepts-tab">False</property>
-                                    <property name="monospace">True</property>
-                                  </object>
-                                </child>
-                              </object>
-                            </child>
-                          </object>
-                          <packing>
-                            <property name="left-attach">1</property>
-                            <property name="top-attach">3</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkScrolledWindow" id="scrolled-button-5">
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="shadow-type">in</property>
-                            <child>
-                              <object class="GtkViewport" id="view-button-5">
-                                <property name="visible">True</property>
-                                <property name="can-focus">False</property>
-                                <child>
-                                  <object class="GtkTextView" id="text-button-5">
-                                    <property name="visible">True</property>
-                                    <property name="can-focus">True</property>
-                                    <property name="editable">False</property>
-                                    <property name="buffer">button-5-buffer</property>
-                                    <property name="accepts-tab">False</property>
-                                    <property name="monospace">True</property>
-                                  </object>
-                                </child>
-                              </object>
-                            </child>
-                          </object>
-                          <packing>
-                            <property name="left-attach">1</property>
-                            <property name="top-attach">4</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkButton" id="button-6">
-                            <property name="label" translatable="yes">Show tree</property>
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="receives-default">True</property>
-                            <signal name="clicked" handler="on_button_6_clicked" swapped="no"/>
-                          </object>
-                          <packing>
-                            <property name="left-attach">0</property>
-                            <property name="top-attach">5</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkButton" id="button-7">
-                            <property name="label" translatable="yes">Delete tree</property>
-                            <property name="visible">True</property>
-                            <property name="can-focus">True</property>
-                            <property name="receives-default">True</property>
-                            <signal name="clicked" handler="on_button_7_clicked" swapped="no"/>
-                          </object>
-                          <packing>
-                            <property name="left-attach">1</property>
-                            <property name="top-attach">5</property>
-                          </packing>
-                        </child>
+                        <property name="use-underline">True</property>
+                        <property name="use-stock">True</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkImageMenuItem">
+                        <property name="label">gtk-open</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="use-underline">True</property>
+                        <property name="use-stock">True</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkImageMenuItem">
+                        <property name="label">gtk-save</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="use-underline">True</property>
+                        <property name="use-stock">True</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkImageMenuItem">
+                        <property name="label">gtk-save-as</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="use-underline">True</property>
+                        <property name="use-stock">True</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkSeparatorMenuItem">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                      </object>
+                    </child>
+                    <child>
+                      <object class="GtkImageMenuItem">
+                        <property name="label">gtk-quit</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="use-underline">True</property>
+                        <property name="use-stock">True</property>
                       </object>
                     </child>
                   </object>
                 </child>
               </object>
             </child>
+            <child>
+              <object class="GtkMenuItem">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">_View</property>
+                <property name="use-underline">True</property>
+                <child type="submenu">
+                  <object class="GtkMenu">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <child>
+                      <object class="GtkImageMenuItem" id="button-tree-view">
+                        <property name="label" translatable="yes">Fullscreen</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="image">image1</property>
+                        <property name="use-stock">False</property>
+                        <signal name="activate" handler="on_button_tree_view_clicked" swapped="no"/>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkMenuItem">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">_Help</property>
+                <property name="use-underline">True</property>
+                <child type="submenu">
+                  <object class="GtkMenu">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                  </object>
+                </child>
+              </object>
+            </child>
           </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">0</property>
+          </packing>
         </child>
         <child>
-          <object class="GtkFlowBoxChild" id="container-top-right">
-            <property name="width-request">100</property>
-            <property name="height-request">367</property>
+          <object class="GtkFlowBox" id="main-container">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
+            <property name="max-children-per-line">2</property>
+            <property name="selection-mode">none</property>
             <child>
-              <object class="GtkScrolledWindow" id="scrolled-top-right">
+              <object class="GtkFlowBoxChild" id="container-top-left">
+                <property name="width-request">100</property>
                 <property name="visible">True</property>
                 <property name="can-focus">True</property>
-                <property name="shadow-type">in</property>
                 <child>
-                  <object class="GtkViewport" id="view-top-right">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <child>
-                      <object class="GtkFixed" id="fixed-top-right">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                      </object>
-                    </child>
-                  </object>
-                </child>
-              </object>
-            </child>
-          </object>
-        </child>
-        <child>
-          <object class="GtkFlowBoxChild" id="container-bottom-left">
-            <property name="width-request">100</property>
-            <property name="height-request">-1</property>
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <child>
-              <object class="GtkBox">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="orientation">vertical</property>
-                <property name="spacing">5</property>
-                <child>
-                  <object class="GtkLabel">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="tooltip-text" translatable="yes">Program log</property>
-                    <property name="label" translatable="yes">Console</property>
-                    <attributes>
-                      <attribute name="font-desc" value="Ubuntu 12"/>
-                    </attributes>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkScrolledWindow" id="scrolled-bottom-left">
+                  <object class="GtkScrolledWindow" id="scrolled-top-left">
                     <property name="visible">True</property>
                     <property name="can-focus">True</property>
-                    <property name="vexpand">True</property>
-                    <property name="hadjustment">adj-hor-scroll-text</property>
-                    <property name="vadjustment">adj-vert-scroll-text</property>
                     <property name="shadow-type">in</property>
                     <child>
-                      <object class="GtkTextView" id="text-bottom-left">
-                        <property name="visible">True</property>
-                        <property name="can-focus">True</property>
-                        <property name="editable">False</property>
-                        <property name="cursor-visible">False</property>
-                        <property name="buffer">console-text-buffer</property>
-                        <property name="accepts-tab">False</property>
-                        <property name="input-purpose">terminal</property>
-                        <property name="monospace">True</property>
-                      </object>
-                    </child>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">1</property>
-                  </packing>
-                </child>
-              </object>
-            </child>
-          </object>
-        </child>
-        <child>
-          <object class="GtkFlowBoxChild" id="container-bottom-right">
-            <property name="width-request">100</property>
-            <property name="height-request">-1</property>
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <child>
-              <object class="GtkBox">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="orientation">vertical</property>
-                <property name="spacing">5</property>
-                <child>
-                  <object class="GtkLabel">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="tooltip-text" translatable="yes">List of created binary trees</property>
-                    <property name="label" translatable="yes">Tree List</property>
-                    <attributes>
-                      <attribute name="font-desc" value="Ubuntu 12"/>
-                    </attributes>
-                  </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkScrolledWindow" id="scrolled-bottom-right">
-                    <property name="height-request">165</property>
-                    <property name="visible">True</property>
-                    <property name="can-focus">True</property>
-                    <property name="vexpand">True</property>
-                    <property name="window-placement">bottom-right</property>
-                    <property name="shadow-type">in</property>
-                    <child>
-                      <object class="GtkViewport" id="view-bottom-right">
+                      <object class="GtkViewport" id="view-top-left">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
                         <child>
-                          <object class="GtkListBox" id="list-bottom-right">
+                          <!-- n-columns=2 n-rows=6 -->
+                          <object class="GtkGrid" id="grid-top-left">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
-                            <signal name="selected-rows-changed" handler="on_list_selected_rows_changed" swapped="no"/>
+                            <property name="row-spacing">10</property>
+                            <property name="column-spacing">10</property>
+                            <property name="row-homogeneous">True</property>
+                            <property name="column-homogeneous">True</property>
+                            <child>
+                              <object class="GtkButton" id="button-1">
+                                <property name="label" translatable="yes">Create new tree</property>
+                                <property name="visible">True</property>
+                                <property name="can-focus">True</property>
+                                <property name="receives-default">True</property>
+                                <signal name="clicked" handler="on_button_1_clicked" object="spin-button-1" swapped="no"/>
+                              </object>
+                              <packing>
+                                <property name="left-attach">0</property>
+                                <property name="top-attach">0</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="button-3">
+                                <property name="label" translatable="yes">Arrange in pre order</property>
+                                <property name="visible">True</property>
+                                <property name="can-focus">True</property>
+                                <property name="receives-default">True</property>
+                                <signal name="clicked" handler="on_button_3_clicked" swapped="no"/>
+                              </object>
+                              <packing>
+                                <property name="left-attach">0</property>
+                                <property name="top-attach">2</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="button-4">
+                                <property name="label" translatable="yes">Arrange in order</property>
+                                <property name="visible">True</property>
+                                <property name="can-focus">True</property>
+                                <property name="receives-default">True</property>
+                                <signal name="clicked" handler="on_button_4_clicked" swapped="no"/>
+                              </object>
+                              <packing>
+                                <property name="left-attach">0</property>
+                                <property name="top-attach">3</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="button-5">
+                                <property name="label" translatable="yes">Arrange in post order</property>
+                                <property name="visible">True</property>
+                                <property name="can-focus">True</property>
+                                <property name="receives-default">True</property>
+                                <signal name="clicked" handler="on_button_5_clicked" swapped="no"/>
+                              </object>
+                              <packing>
+                                <property name="left-attach">0</property>
+                                <property name="top-attach">4</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkSpinButton" id="spin-button-1">
+                                <property name="visible">True</property>
+                                <property name="can-focus">True</property>
+                                <property name="text" translatable="yes">0</property>
+                                <property name="adjustment">adjustment-spin-1</property>
+                              </object>
+                              <packing>
+                                <property name="left-attach">1</property>
+                                <property name="top-attach">0</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkSpinButton" id="spin-button-2">
+                                <property name="visible">True</property>
+                                <property name="can-focus">True</property>
+                                <property name="text" translatable="yes">0</property>
+                                <property name="adjustment">adjustment-spin-2</property>
+                              </object>
+                              <packing>
+                                <property name="left-attach">1</property>
+                                <property name="top-attach">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="button-2">
+                                <property name="label" translatable="yes">Insert node</property>
+                                <property name="visible">True</property>
+                                <property name="can-focus">True</property>
+                                <property name="receives-default">True</property>
+                                <signal name="clicked" handler="on_button_2_clicked" object="spin-button-2" swapped="no"/>
+                              </object>
+                              <packing>
+                                <property name="left-attach">0</property>
+                                <property name="top-attach">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkScrolledWindow" id="scrolled-button-3">
+                                <property name="visible">True</property>
+                                <property name="can-focus">True</property>
+                                <property name="shadow-type">in</property>
+                                <child>
+                                  <object class="GtkViewport" id="view-button-3">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <child>
+                                      <object class="GtkTextView" id="text-button-3">
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">True</property>
+                                        <property name="editable">False</property>
+                                        <property name="buffer">button-3-buffer</property>
+                                        <property name="accepts-tab">False</property>
+                                        <property name="monospace">True</property>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="left-attach">1</property>
+                                <property name="top-attach">2</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkScrolledWindow" id="scrolled-button-4">
+                                <property name="visible">True</property>
+                                <property name="can-focus">True</property>
+                                <property name="shadow-type">in</property>
+                                <child>
+                                  <object class="GtkViewport" id="view-button-4">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <child>
+                                      <object class="GtkTextView" id="text-button-4">
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">True</property>
+                                        <property name="editable">False</property>
+                                        <property name="buffer">button-4-buffer</property>
+                                        <property name="accepts-tab">False</property>
+                                        <property name="monospace">True</property>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="left-attach">1</property>
+                                <property name="top-attach">3</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkScrolledWindow" id="scrolled-button-5">
+                                <property name="visible">True</property>
+                                <property name="can-focus">True</property>
+                                <property name="shadow-type">in</property>
+                                <child>
+                                  <object class="GtkViewport" id="view-button-5">
+                                    <property name="visible">True</property>
+                                    <property name="can-focus">False</property>
+                                    <child>
+                                      <object class="GtkTextView" id="text-button-5">
+                                        <property name="visible">True</property>
+                                        <property name="can-focus">True</property>
+                                        <property name="editable">False</property>
+                                        <property name="buffer">button-5-buffer</property>
+                                        <property name="accepts-tab">False</property>
+                                        <property name="monospace">True</property>
+                                      </object>
+                                    </child>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="left-attach">1</property>
+                                <property name="top-attach">4</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="button-6">
+                                <property name="label" translatable="yes">Show tree</property>
+                                <property name="visible">True</property>
+                                <property name="can-focus">True</property>
+                                <property name="receives-default">True</property>
+                                <signal name="clicked" handler="on_button_6_clicked" swapped="no"/>
+                              </object>
+                              <packing>
+                                <property name="left-attach">0</property>
+                                <property name="top-attach">5</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="button-7">
+                                <property name="label" translatable="yes">Delete tree</property>
+                                <property name="visible">True</property>
+                                <property name="can-focus">True</property>
+                                <property name="receives-default">True</property>
+                                <signal name="clicked" handler="on_button_7_clicked" swapped="no"/>
+                              </object>
+                              <packing>
+                                <property name="left-attach">1</property>
+                                <property name="top-attach">5</property>
+                              </packing>
+                            </child>
                           </object>
                         </child>
                       </object>
                     </child>
                   </object>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">1</property>
-                  </packing>
                 </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkFlowBoxChild" id="container-top-right">
+                <property name="width-request">100</property>
+                <property name="height-request">367</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <child>
+                  <object class="GtkScrolledWindow" id="scrolled-top-right">
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="hadjustment">viewport-adj-1</property>
+                    <property name="vadjustment">viewport-adj-2</property>
+                    <property name="shadow-type">in</property>
+                    <child>
+                      <object class="GtkViewport" id="view-top-right">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <child>
+                          <object class="GtkFixed" id="fixed-top-right">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkFlowBoxChild" id="container-bottom-left">
+                <property name="width-request">100</property>
+                <property name="height-request">-1</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="vexpand">True</property>
+                <child>
+                  <object class="GtkBox">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="orientation">vertical</property>
+                    <property name="spacing">5</property>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="tooltip-text" translatable="yes">Program log</property>
+                        <property name="label" translatable="yes">Console</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Ubuntu 12"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkScrolledWindow" id="scrolled-bottom-left">
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="vexpand">True</property>
+                        <property name="hadjustment">adj-hor-scroll-text</property>
+                        <property name="vadjustment">adj-vert-scroll-text</property>
+                        <property name="shadow-type">in</property>
+                        <child>
+                          <object class="GtkTextView" id="text-bottom-left">
+                            <property name="visible">True</property>
+                            <property name="can-focus">True</property>
+                            <property name="editable">False</property>
+                            <property name="cursor-visible">False</property>
+                            <property name="buffer">console-text-buffer</property>
+                            <property name="accepts-tab">False</property>
+                            <property name="input-purpose">terminal</property>
+                            <property name="monospace">True</property>
+                          </object>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkFlowBoxChild" id="container-bottom-right">
+                <property name="width-request">100</property>
+                <property name="height-request">-1</property>
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <child>
+                  <object class="GtkBox">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="orientation">vertical</property>
+                    <property name="spacing">5</property>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="tooltip-text" translatable="yes">List of created binary trees</property>
+                        <property name="label" translatable="yes">Tree List</property>
+                        <attributes>
+                          <attribute name="font-desc" value="Ubuntu 12"/>
+                        </attributes>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkScrolledWindow" id="scrolled-bottom-right">
+                        <property name="height-request">165</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="vexpand">True</property>
+                        <property name="window-placement">bottom-right</property>
+                        <property name="shadow-type">in</property>
+                        <child>
+                          <object class="GtkViewport" id="view-bottom-right">
+                            <property name="visible">True</property>
+                            <property name="can-focus">False</property>
+                            <child>
+                              <object class="GtkListBox" id="list-bottom-right">
+                                <property name="visible">True</property>
+                                <property name="can-focus">False</property>
+                                <signal name="selected-rows-changed" handler="on_list_selected_rows_changed" swapped="no"/>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">True</property>
+            <property name="position">1</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkWindow" id="tree-window">
+    <property name="width-request">1200</property>
+    <property name="height-request">600</property>
+    <property name="can-focus">False</property>
+    <property name="title" translatable="yes">View</property>
+    <property name="window-position">center</property>
+    <property name="icon">res/btree-view.png</property>
+    <child>
+      <object class="GtkScrolledWindow">
+        <property name="visible">True</property>
+        <property name="can-focus">True</property>
+        <property name="shadow-type">in</property>
+        <child>
+          <object class="GtkViewport">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <child>
+              <object class="GtkFixed" id="fixed-tree-view">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
               </object>
             </child>
           </object>
         </child>
       </object>
     </child>
+  </object>
+  <object class="GtkAdjustment" id="viewport-adj-1">
+    <property name="lower">-100</property>
+    <property name="upper">100</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="viewport-adj-2">
+    <property name="upper">100</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
   </object>
 </interface>

@@ -33,18 +33,18 @@ void console_log(const gchar *text, GtkWidget *buffer, bool newline)
         &end, tmp, strlen(tmp));
 }
 
-void clear_viewport()
+void clear_viewport(GtkWidget* viewport)
 {
     GList *children, *iter;
 
-    children = gtk_container_get_children(GTK_CONTAINER(FIXED_TOP_RIGHT));
+    children = gtk_container_get_children(GTK_CONTAINER(viewport));
 
     for (iter = children; iter != NULL; iter = g_list_next(iter))
-        gtk_container_remove(GTK_CONTAINER(FIXED_TOP_RIGHT), g_object_ref(iter->data));
+        gtk_container_remove(GTK_CONTAINER(viewport), g_object_ref(iter->data));
 
     g_list_free(children);
 
-    gtk_widget_show_all(FIXED_TOP_RIGHT);
+    gtk_widget_show_all(viewport);
 }
 
 void on_button_1_clicked(GtkButton *b, GtkSpinButton *s)
@@ -254,7 +254,8 @@ void on_button_6_clicked(GtkButton *b)
         console_log("ERROR: no tree selected", TEXT_BUFFER_BOTTOM_LEFT, true);
     else
     {
-        clear_viewport();
+        clear_viewport(FIXED_TREE_VIEW);
+        clear_viewport(FIXED_TOP_RIGHT);
 
         GtkWidget *label = gtk_bin_get_child(GTK_BIN(selected_row));
         char tmp[32];
@@ -264,7 +265,9 @@ void on_button_6_clicked(GtkButton *b)
 
         Tree *selected_tree = find_tree_list(TREE_LIST, selected_tree_root);
 
-        pre_order_show_tree(selected_tree->root);
+        selected_tree->root->x_pos = ROOT_WIDGET_POS_X;
+
+        pre_order_show_tree(selected_tree->root, FIXED_TOP_RIGHT);
 
         gtk_widget_show_all(FIXED_TOP_RIGHT);
     }
@@ -306,7 +309,40 @@ void on_button_7_clicked(GtkButton *b)
 
         gtk_widget_show_all(LIST_BOTTOM_RIGHT);
 
-        clear_viewport();
+        clear_viewport(FIXED_TOP_RIGHT);
+    }
+}
+
+void on_button_tree_view_clicked(GtkButton *b)
+{
+    GtkListBoxRow *selected_row =
+        gtk_list_box_get_selected_row(GTK_LIST_BOX(LIST_BOTTOM_RIGHT));
+
+    if (!selected_row)
+        console_log("ERROR: no tree selected", TEXT_BUFFER_BOTTOM_LEFT, true);
+    else
+    {
+        clear_viewport(FIXED_TREE_VIEW);
+        clear_viewport(FIXED_TOP_RIGHT);
+
+        GtkWidget *label = gtk_bin_get_child(GTK_BIN(selected_row));
+        char tmp[32];
+        int selected_tree_root = atoi(gtk_label_get_text(GTK_LABEL(label)));
+
+        sprintf(tmp, "%i", selected_tree_root);
+
+        Tree *selected_tree = find_tree_list(TREE_LIST, selected_tree_root);
+
+        ROOT_WIDGET_POS_X = get_screen_width() / 2;
+
+        selected_tree->root->x_pos = ROOT_WIDGET_POS_X;
+
+        pre_order_show_tree(selected_tree->root, FIXED_TREE_VIEW);
+
+        gtk_widget_show_all(TREE_WINDOW);
+        gtk_window_set_resizable(GTK_WINDOW(TREE_WINDOW), true);
+        gtk_window_maximize(GTK_WINDOW(TREE_WINDOW));
+        gtk_window_set_resizable(GTK_WINDOW(TREE_WINDOW), false);
     }
 }
 
@@ -338,5 +374,33 @@ void on_list_selected_rows_changed(GtkListBox *l, GtkListBoxRow *r)
         console_log(tmp, TEXT_BUFFER_BOTTOM_LEFT, true);
     }
 
-    clear_viewport();
+    clear_viewport(FIXED_TOP_RIGHT);
+    clear_viewport(FIXED_TREE_VIEW);
+}
+
+gboolean on_widget_deleted(GtkWidget *widget, GdkEvent *event, gpointer data)
+{
+    gtk_widget_hide(widget);
+    ROOT_WIDGET_POS_X = INTERNAL_VIEWPORT_POS_X;
+    return TRUE;
+}
+
+gint get_screen_width()
+{
+	GdkRectangle workarea = {0};
+	gdk_monitor_get_workarea(
+		gdk_display_get_primary_monitor(gdk_display_get_default()),
+		&workarea);
+
+	return workarea.width;
+}
+
+gint get_screen_height()
+{
+	GdkRectangle workarea = {0};
+	gdk_monitor_get_workarea(
+		gdk_display_get_primary_monitor(gdk_display_get_default()),
+		&workarea);
+
+	return workarea.height;
 }

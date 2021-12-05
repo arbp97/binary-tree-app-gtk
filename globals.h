@@ -23,6 +23,7 @@ This program is free software: you can redistribute it and/or modify
 // Widgets used all around the program
 
 extern GtkWidget *MAIN_WINDOW;
+extern GtkWidget *TREE_WINDOW;
 extern GtkWidget *MAIN_CONTAINER;
 extern GtkWidget *CONTAINER_TOP_LEFT;
 extern GtkWidget *CONTAINER_TOP_RIGHT;
@@ -33,6 +34,7 @@ extern GtkWidget *SCROLL_WINDOW_TOP_RIGHT;
 extern GtkWidget *VIEWPORT_TOP_LEFT;
 extern GtkWidget *VIEWPORT_TOP_RIGHT;
 extern GtkWidget *FIXED_TOP_RIGHT;
+extern GtkWidget *FIXED_TREE_VIEW;
 extern GtkWidget *GRID_TOP_LEFT;
 extern GtkWidget *BUTTON_1;
 extern GtkWidget *BUTTON_2;
@@ -41,6 +43,7 @@ extern GtkWidget *BUTTON_4;
 extern GtkWidget *BUTTON_5;
 extern GtkWidget *BUTTON_6;
 extern GtkWidget *BUTTON_7;
+extern GtkWidget *BUTTON_TREE_VIEW;
 extern GtkWidget *SPIN_BUTTON_1;
 extern GtkWidget *SPIN_BUTTON_2;
 extern GtkWidget *SCROLL_WINDOW_BOTTON_LEFT;
@@ -63,14 +66,19 @@ typedef enum Arrangement
     POST_ORDER = 2
 } Arrangement;
 
-/* 
-    ROOT_WIDGET_POS_X/Y
-    used to set the root node on the viewport
+/*
+    mid x position of the container to show trees
+    inside the app.
 */
-static int ROOT_WIDGET_POS_X = 220;
-static int ROOT_WIDGET_POS_Y = 0;
+static const int INTERNAL_VIEWPORT_POS_X = 225;
+
+// variable x position of the root widget of a tree.
+// it changes when the viewport changes
+extern int ROOT_WIDGET_POS_X;
+// variable y position of the root widget of a tree.
+extern int ROOT_WIDGET_POS_Y;
 
 // balance tolerance of an AVL tree
-static int AVL_THRESHOLD = 1;
+static const int AVL_THRESHOLD = 1;
 
 #endif // !_GLOBALS_H_

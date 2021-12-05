@@ -18,6 +18,7 @@ This program is free software: you can redistribute it and/or modify
 #include "events.h"
 
 GtkWidget *MAIN_WINDOW;
+GtkWidget *TREE_WINDOW;
 GtkWidget *MAIN_CONTAINER;
 GtkWidget *CONTAINER_TOP_LEFT;
 GtkWidget *CONTAINER_TOP_RIGHT;
@@ -28,6 +29,7 @@ GtkWidget *SCROLL_WINDOW_TOP_RIGHT;
 GtkWidget *VIEWPORT_TOP_LEFT;
 GtkWidget *VIEWPORT_TOP_RIGHT;
 GtkWidget *FIXED_TOP_RIGHT;
+GtkWidget *FIXED_TREE_VIEW;
 GtkWidget *GRID_TOP_LEFT;
 GtkWidget *BUTTON_1;
 GtkWidget *BUTTON_2;
@@ -36,6 +38,7 @@ GtkWidget *BUTTON_4;
 GtkWidget *BUTTON_5;
 GtkWidget *BUTTON_6;
 GtkWidget *BUTTON_7;
+GtkWidget *BUTTON_TREE_VIEW;
 GtkWidget *SPIN_BUTTON_1;
 GtkWidget *SPIN_BUTTON_2;
 GtkWidget *SCROLL_WINDOW_BOTTON_LEFT;
@@ -51,6 +54,9 @@ GtkBuilder *BUILDER;
 
 List *TREE_LIST;
 
+int ROOT_WIDGET_POS_X = INTERNAL_VIEWPORT_POS_X;
+int ROOT_WIDGET_POS_Y = 0;
+
 int main(int argc, char *argv[])
 {
 	gtk_init(&argc, &argv); // init Gtk
@@ -63,8 +69,10 @@ int main(int argc, char *argv[])
 	BUILDER = gtk_builder_new_from_resource("/app-layout/app-layout.glade");
 
 	MAIN_WINDOW = GTK_WIDGET(gtk_builder_get_object(BUILDER, "main-window"));
+	TREE_WINDOW = GTK_WIDGET(gtk_builder_get_object(BUILDER, "tree-window"));
 
 	g_signal_connect(MAIN_WINDOW, "destroy", G_CALLBACK(gtk_main_quit), NULL);
+	g_signal_connect(TREE_WINDOW, "delete-event", G_CALLBACK(on_widget_deleted), NULL);
 
 	gtk_builder_connect_signals(BUILDER, NULL);
 
@@ -91,6 +99,8 @@ int main(int argc, char *argv[])
 		GTK_WIDGET(gtk_builder_get_object(BUILDER, "view-top-right"));
 	FIXED_TOP_RIGHT =
 		GTK_WIDGET(gtk_builder_get_object(BUILDER, "fixed-top-right"));
+	FIXED_TREE_VIEW =
+		GTK_WIDGET(gtk_builder_get_object(BUILDER, "fixed-tree-view"));
 	GRID_TOP_LEFT =
 		GTK_WIDGET(gtk_builder_get_object(BUILDER, "grid-top-left"));
 
@@ -101,6 +111,8 @@ int main(int argc, char *argv[])
 	BUTTON_5 = GTK_WIDGET(gtk_builder_get_object(BUILDER, "button-5"));
 	BUTTON_6 = GTK_WIDGET(gtk_builder_get_object(BUILDER, "button-6"));
 	BUTTON_7 = GTK_WIDGET(gtk_builder_get_object(BUILDER, "button-7"));
+
+	BUTTON_TREE_VIEW = GTK_WIDGET(gtk_builder_get_object(BUILDER, "button-tree-view"));
 
 	SPIN_BUTTON_1 = GTK_WIDGET(gtk_builder_get_object(BUILDER, "spin-button-1"));
 	SPIN_BUTTON_2 = GTK_WIDGET(gtk_builder_get_object(BUILDER, "spin-button-2"));
