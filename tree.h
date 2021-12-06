@@ -73,12 +73,6 @@ bool add_node_tree(Tree *tree, int data);
 bool push_node_tree(NodeTree **root, NodeTree *new_node);
 
 /*
-  Searches for the specified data in the tree. returns
-  true if found
-*/
-NodeTree *search_tree(Tree *tree, int data);
-
-/*
   Deletes specified tree and its children
 */
 void delete_tree(Tree *tree);
@@ -87,18 +81,19 @@ void delete_tree(Tree *tree);
   Deletes all nodes from the root downwards, using
   post order algorithm
 */
-void post_order_delete(NodeTree *root);
+void delete_node_tree(NodeTree *root);
 
 /*
   Searches for data inside a tree using pre order algorithm.
   Used by search_tree function
 */
-NodeTree *pre_order_search(NodeTree *root, int data, NodeTree *result);
+NodeTree *search_tree(NodeTree *root, int data);
 
-/*
-  finds a tree with the same root
-*/
+// searches only the root values of the trees of the list
 Tree *find_tree_list(struct List *list, int tree_root);
+
+// searches all the trees in the list to find the node
+NodeTree *find_node(struct List *list, int node);
 
 /******************************************************************************/
 

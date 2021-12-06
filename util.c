@@ -61,11 +61,11 @@ void show_tree_arrangement_on_buffer(GtkListBoxRow *selected_row, Arrangement ar
         gtk_bin_get_child(GTK_BIN(selected_row));
 
     // get the tree root out of the label
-    int selected_row_tree_root =
+    int root_value =
         atoi(gtk_label_get_text(GTK_LABEL(selected_row_label)));
 
     // finally, find the tree with that root
-    Tree *selected_tree = find_tree_list(TREE_LIST, selected_row_tree_root);
+    NodeTree *selected_tree_root = find_node(TREE_LIST, root_value);
 
     // iterators to clear the text buffer
     GtkTextIter start, end;
@@ -81,13 +81,13 @@ void show_tree_arrangement_on_buffer(GtkListBoxRow *selected_row, Arrangement ar
     switch (arrangement)
     {
     case PRE_ORDER:
-        pre_order(selected_tree->root);
+        pre_order(selected_tree_root);
         break;
     case IN_ORDER:
-        in_order(selected_tree->root);
+        in_order(selected_tree_root);
         break;
     case POST_ORDER:
-        post_order(selected_tree->root);
+        post_order(selected_tree_root);
         break;
     default:
         break;

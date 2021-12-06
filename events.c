@@ -25,7 +25,7 @@ void on_button_1_clicked(GtkButton *b, GtkSpinButton *s)
     we check whether a tree with this root
     exists or not
     */
-    if (!find_tree_list(TREE_LIST, spin_value))
+    if (!find_node(TREE_LIST, spin_value))
     {
         /*
         creating a new tree instance with the specified root value,
@@ -69,7 +69,7 @@ void on_button_1_clicked(GtkButton *b, GtkSpinButton *s)
         gtk_widget_show_all(new_row);
     }
     else
-        console_log("ERROR: Tree already exists with that root", TEXT_BUFFER_BOTTOM_LEFT, true);
+        console_log("ERROR: node already exists", TEXT_BUFFER_BOTTOM_LEFT, true);
 }
 
 void on_button_2_clicked(GtkButton *b, GtkSpinButton *s)
@@ -88,16 +88,16 @@ void on_button_2_clicked(GtkButton *b, GtkSpinButton *s)
             gtk_bin_get_child(GTK_BIN(selected_row));
 
         // get the tree root out of the label
-        int selected_row_tree_root =
+        int root_value =
             atoi(gtk_label_get_text(GTK_LABEL(selected_row_label)));
 
         // finally, find the tree with that root
-        Tree *selected_tree = find_tree_list(TREE_LIST, selected_row_tree_root);
+        Tree *selected_tree = find_tree_list(TREE_LIST, root_value);
 
         /* Adding the new node to the selected tree */
         if (add_node_tree(selected_tree, spin_value))
         {
-            if (selected_tree->root->data != selected_row_tree_root)
+            if (selected_tree->root->data != root_value)
             {
                 /*
                 if the root changed (because of balancing), then
@@ -108,10 +108,12 @@ void on_button_2_clicked(GtkButton *b, GtkSpinButton *s)
                 gtk_label_set_text(GTK_LABEL(selected_row_label), tmp);
             }
 
-            console_log("Added node successfully", TEXT_BUFFER_BOTTOM_LEFT, true);
+            char tmp[50];
+            sprintf(tmp, "Node added successfully: %i", spin_value);
+            console_log(tmp, TEXT_BUFFER_BOTTOM_LEFT, true);
         }
         else
-            console_log("ERROR: node was not created: node already exists", TEXT_BUFFER_BOTTOM_LEFT, true);
+            console_log("ERROR: node already exists", TEXT_BUFFER_BOTTOM_LEFT, true);
     }
     else
         console_log("ERROR: no tree selected", TEXT_BUFFER_BOTTOM_LEFT, true);
@@ -174,11 +176,11 @@ void on_button_6_clicked(GtkButton *b)
 
         GtkWidget *label = gtk_bin_get_child(GTK_BIN(selected_row));
         char tmp[32];
-        int selected_tree_root = atoi(gtk_label_get_text(GTK_LABEL(label)));
+        int root_value = atoi(gtk_label_get_text(GTK_LABEL(label)));
 
-        sprintf(tmp, "%i", selected_tree_root);
+        sprintf(tmp, "%i", root_value);
 
-        Tree *selected_tree = find_tree_list(TREE_LIST, selected_tree_root);
+        NodeTree *selected_tree_root = find_node(TREE_LIST, root_value);
 
         /*
         before showing the tree we must be sure that
@@ -186,9 +188,9 @@ void on_button_6_clicked(GtkButton *b)
         */
         ROOT_WIDGET_POS_X = INTERNAL_VIEWPORT_POS_X;
 
-        selected_tree->root->x_pos = ROOT_WIDGET_POS_X;
+        selected_tree_root->x_pos = ROOT_WIDGET_POS_X;
 
-        render_tree(selected_tree->root, FIXED_TOP_RIGHT);
+        render_tree(selected_tree_root, FIXED_TOP_RIGHT);
 
         gtk_widget_show_all(FIXED_TOP_RIGHT);
     }
@@ -205,13 +207,13 @@ void on_button_7_clicked(GtkButton *b)
     {
         GtkWidget *label = gtk_bin_get_child(GTK_BIN(selected_row));
         char tmp[32];
-        int selected_tree_root = atoi(gtk_label_get_text(GTK_LABEL(label)));
+        int root_value = atoi(gtk_label_get_text(GTK_LABEL(label)));
 
-        sprintf(tmp, "%i", selected_tree_root);
+        sprintf(tmp, "%i", root_value);
 
         /* finding and deleting the tree and its node in the list*/
 
-        Tree *selected_tree = find_tree_list(TREE_LIST, selected_tree_root);
+        Tree *selected_tree = find_tree_list(TREE_LIST, root_value);
         NodeList *cursor = TREE_LIST->head;
         bool found = false;
 
@@ -248,11 +250,11 @@ void on_button_tree_view_clicked(GtkButton *b)
 
         GtkWidget *label = gtk_bin_get_child(GTK_BIN(selected_row));
         char tmp[32];
-        int selected_tree_root = atoi(gtk_label_get_text(GTK_LABEL(label)));
+        int root_value = atoi(gtk_label_get_text(GTK_LABEL(label)));
 
-        sprintf(tmp, "%i", selected_tree_root);
+        sprintf(tmp, "%i", root_value);
 
-        Tree *selected_tree = find_tree_list(TREE_LIST, selected_tree_root);
+        Tree *selected_tree = find_tree_list(TREE_LIST, root_value);
 
         /*
         set the root position x to fit the fullscreen
@@ -301,11 +303,9 @@ void on_list_selected_rows_changed(GtkListBox *l, GtkListBoxRow *r)
         this handler. In that case the row would not exist.
         */
         GtkWidget *label = gtk_bin_get_child(GTK_BIN(row));
-        int selected_tree_root = atoi(gtk_label_get_text(GTK_LABEL(label)));
+        int root_value = atoi(gtk_label_get_text(GTK_LABEL(label)));
 
-        sprintf(tmp, "Tree selected: %i", selected_tree_root);
-
-        Tree *selected_tree = find_tree_list(TREE_LIST, selected_tree_root);
+        sprintf(tmp, "Tree selected: %i", root_value);
 
         console_log(tmp, TEXT_BUFFER_BOTTOM_LEFT, true);
     }
