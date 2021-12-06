@@ -290,7 +290,7 @@ NodeTree *search_tree(NodeTree *root, int data)
 	return NULL;
 }
 
-void delete_node(NodeTree *root)
+void delete_node_tree(NodeTree *root)
 {
 	/*
 	Deletes all nodes in a tree recursively, using
@@ -298,10 +298,10 @@ void delete_node(NodeTree *root)
 	*/
 
 	if (root->left)
-		delete_node(root->left);
+		delete_node_tree(root->left);
 
 	if (root->right)
-		delete_node(root->right);
+		delete_node_tree(root->right);
 
 	free(root);
 	root = NULL;
@@ -309,7 +309,7 @@ void delete_node(NodeTree *root)
 
 void delete_tree(Tree *tree)
 {
-	delete_node(tree->root);
+	delete_node_tree(tree->root);
 
 	free(tree);
 	tree = NULL;
