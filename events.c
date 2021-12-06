@@ -25,11 +25,7 @@ void on_button_1_clicked(GtkButton *b, GtkSpinButton *s)
     we check whether a tree with this root
     exists or not
     */
-    if (find_tree_list(TREE_LIST, spin_value))
-    {
-        console_log("ERROR: Tree already exists with that root", TEXT_BUFFER_BOTTOM_LEFT, true);
-    }
-    else
+    if (!find_tree_list(TREE_LIST, spin_value))
     {
         /*
         creating a new tree instance with the specified root value,
@@ -72,6 +68,8 @@ void on_button_1_clicked(GtkButton *b, GtkSpinButton *s)
         // shows the changes in the list
         gtk_widget_show_all(new_row);
     }
+    else
+        console_log("ERROR: Tree already exists with that root", TEXT_BUFFER_BOTTOM_LEFT, true);
 }
 
 void on_button_2_clicked(GtkButton *b, GtkSpinButton *s)
@@ -83,11 +81,7 @@ void on_button_2_clicked(GtkButton *b, GtkSpinButton *s)
 
     /* checking if the row is actually selected,
         or if it even exists */
-    if (!selected_row)
-    {
-        console_log("ERROR: no tree selected", TEXT_BUFFER_BOTTOM_LEFT, true);
-    }
-    else
+    if (selected_row)
     {
         // get child out of the selected row, a label
         GtkWidget *selected_row_label =
@@ -119,6 +113,8 @@ void on_button_2_clicked(GtkButton *b, GtkSpinButton *s)
         else
             console_log("ERROR: node was not created: node already exists", TEXT_BUFFER_BOTTOM_LEFT, true);
     }
+    else
+        console_log("ERROR: no tree selected", TEXT_BUFFER_BOTTOM_LEFT, true);
 }
 
 void on_button_3_clicked(GtkButton *b)
@@ -128,10 +124,10 @@ void on_button_3_clicked(GtkButton *b)
 
     /* checking if the row is actually selected,
         or if it even exists */
-    if (!selected_row)
-        console_log("ERROR: no tree selected", TEXT_BUFFER_BOTTOM_LEFT, true);
-    else
+    if (selected_row)
         show_tree_arrangement_on_buffer(selected_row, PRE_ORDER, TEXT_BUFFER_BUTTON_3);
+    else
+        console_log("ERROR: no tree selected", TEXT_BUFFER_BOTTOM_LEFT, true);
 }
 
 void on_button_4_clicked(GtkButton *b)
@@ -141,10 +137,10 @@ void on_button_4_clicked(GtkButton *b)
 
     /* checking if the row is actually selected,
         or if it even exists */
-    if (!selected_row)
-        console_log("ERROR: no tree selected", TEXT_BUFFER_BOTTOM_LEFT, true);
-    else
+    if (selected_row)
         show_tree_arrangement_on_buffer(selected_row, IN_ORDER, TEXT_BUFFER_BUTTON_4);
+    else
+        console_log("ERROR: no tree selected", TEXT_BUFFER_BOTTOM_LEFT, true);
 }
 
 void on_button_5_clicked(GtkButton *b)
@@ -154,10 +150,10 @@ void on_button_5_clicked(GtkButton *b)
 
     /* checking if the row is actually selected,
         or if it even exists */
-    if (!selected_row)
-        console_log("ERROR: no tree selected", TEXT_BUFFER_BOTTOM_LEFT, true);
-    else
+    if (selected_row)
         show_tree_arrangement_on_buffer(selected_row, POST_ORDER, TEXT_BUFFER_BUTTON_5);
+    else
+        console_log("ERROR: no tree selected", TEXT_BUFFER_BOTTOM_LEFT, true);
 }
 
 void on_button_6_clicked(GtkButton *b)
@@ -170,11 +166,8 @@ void on_button_6_clicked(GtkButton *b)
     GtkListBoxRow *selected_row =
         gtk_list_box_get_selected_row(GTK_LIST_BOX(LIST_BOTTOM_RIGHT));
 
-    /* checking if the row is actually selected,
-        or if it even exists */
-    if (!selected_row)
-        console_log("ERROR: no tree selected", TEXT_BUFFER_BOTTOM_LEFT, true);
-    else
+    /* checking if the row is actually selected*/
+    if (selected_row)
     {
         clear_viewport(FIXED_TREE_VIEW);
         clear_viewport(FIXED_TOP_RIGHT);
@@ -187,6 +180,10 @@ void on_button_6_clicked(GtkButton *b)
 
         Tree *selected_tree = find_tree_list(TREE_LIST, selected_tree_root);
 
+        /*
+        before showing the tree we must be sure that
+        the root position x is set to fit the small vieport.
+        */
         ROOT_WIDGET_POS_X = INTERNAL_VIEWPORT_POS_X;
 
         selected_tree->root->x_pos = ROOT_WIDGET_POS_X;
@@ -195,6 +192,8 @@ void on_button_6_clicked(GtkButton *b)
 
         gtk_widget_show_all(FIXED_TOP_RIGHT);
     }
+    else
+        console_log("ERROR: no tree selected", TEXT_BUFFER_BOTTOM_LEFT, true);
 }
 
 void on_button_7_clicked(GtkButton *b)
@@ -202,9 +201,7 @@ void on_button_7_clicked(GtkButton *b)
     GtkListBoxRow *selected_row =
         gtk_list_box_get_selected_row(GTK_LIST_BOX(LIST_BOTTOM_RIGHT));
 
-    if (!selected_row)
-        console_log("ERROR: no tree selected", TEXT_BUFFER_BOTTOM_LEFT, true);
-    else
+    if (selected_row)
     {
         GtkWidget *label = gtk_bin_get_child(GTK_BIN(selected_row));
         char tmp[32];
@@ -235,6 +232,8 @@ void on_button_7_clicked(GtkButton *b)
 
         clear_viewport(FIXED_TOP_RIGHT);
     }
+    else
+        console_log("ERROR: no tree selected", TEXT_BUFFER_BOTTOM_LEFT, true);
 }
 
 void on_button_tree_view_clicked(GtkButton *b)
@@ -242,9 +241,7 @@ void on_button_tree_view_clicked(GtkButton *b)
     GtkListBoxRow *selected_row =
         gtk_list_box_get_selected_row(GTK_LIST_BOX(LIST_BOTTOM_RIGHT));
 
-    if (!selected_row)
-        console_log("ERROR: no tree selected", TEXT_BUFFER_BOTTOM_LEFT, true);
-    else
+    if (selected_row)
     {
         clear_viewport(FIXED_TREE_VIEW);
         clear_viewport(FIXED_TOP_RIGHT);
@@ -257,6 +254,10 @@ void on_button_tree_view_clicked(GtkButton *b)
 
         Tree *selected_tree = find_tree_list(TREE_LIST, selected_tree_root);
 
+        /*
+        set the root position x to fit the fullscreen
+        view of the tree.
+        */
         ROOT_WIDGET_POS_X = get_screen_width() / 2;
 
         selected_tree->root->x_pos = ROOT_WIDGET_POS_X;
@@ -268,6 +269,8 @@ void on_button_tree_view_clicked(GtkButton *b)
         gtk_window_maximize(GTK_WINDOW(TREE_WINDOW));
         gtk_window_set_resizable(GTK_WINDOW(TREE_WINDOW), false);
     }
+    else
+        console_log("ERROR: no tree selected", TEXT_BUFFER_BOTTOM_LEFT, true);
 }
 
 void on_button_about_clicked(GtkButton *b)
@@ -282,10 +285,9 @@ void on_button_about_close_clicked(GtkButton *b)
 
 void on_list_selected_rows_changed(GtkListBox *l, GtkListBoxRow *r)
 {
-
     /*
-        Shows the current selected tree and cleans the viewport when
-        a new tree is selected from the list.
+    Shows the current selected tree and cleans the viewport when
+    a new tree is selected from the list.
     */
     char tmp[32];
     GtkListBoxRow *row =

@@ -116,6 +116,7 @@ gint get_screen_height()
 
 void render_tree(NodeTree *root, GtkWidget *viewport)
 {
+    //set tree position
 	adjust_tree_position(&root);
 
 	gtk_fixed_put(GTK_FIXED(viewport),

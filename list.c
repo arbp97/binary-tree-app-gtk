@@ -170,10 +170,7 @@ void delete_node_list(List *list, NodeList *node_list_ptr)
 void delete_list(List *list)
 {
 	NodeList *cursor = create_node_list(NULL);
-
-	/*
-		auxPtr: used to get the next node after deleting the current cursor.
-	*/
+	// auxPtr: used to get the next node after deleting the current cursor.
 	NodeList *auxPtr = create_node_list(NULL);
 	cursor = list->head;
 
