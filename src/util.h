@@ -24,7 +24,7 @@ This program is free software: you can redistribute it and/or modify
 // write to console in app
 void console_log(const gchar *text, GtkWidget *buffer, bool newline);
 
-/* removes all widgets from the the top right container*/
+/* removes all widgets from the the passed container*/
 void clear_viewport(GtkWidget *viewport);
 
 /* prints tree in specified buffer and arrangement*/
