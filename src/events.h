@@ -46,7 +46,9 @@ void on_button_7_clicked(GtkButton *b);
 /* Shows the dedicated tree view window*/
 void on_button_tree_view_clicked(GtkButton *b);
 
-void on_button_about_clicked(GtkButton *b);
+void on_button_about_clicked(GtkMenuItem *b);
+
+void on_button_tree_mode_clicked(GtkMenuItem *b);
 
 void on_button_about_close_clicked(GtkButton *b);
 

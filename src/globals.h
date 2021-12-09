@@ -67,4 +67,7 @@ extern int ROOT_WIDGET_POS_Y;
 // balance tolerance of an AVL tree
 static const int AVL_THRESHOLD = 1;
 
+// turn off/on avl tree balancing. DEFAULT: TRUE
+extern bool AVL_BALANCING;
+
 #endif // !_GLOBALS_H_

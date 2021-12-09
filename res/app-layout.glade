@@ -93,17 +93,22 @@ This program is free software: you can redistribute it and/or modify
   <object class="GtkImage" id="image1">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="stock">gtk-zoom-fit</property>
+    <property name="icon-name">view-fullscreen</property>
   </object>
   <object class="GtkImage" id="image2">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="stock">gtk-properties</property>
+    <property name="icon-name">applications-office</property>
   </object>
   <object class="GtkImage" id="image3">
     <property name="visible">True</property>
     <property name="can-focus">False</property>
-    <property name="stock">gtk-about</property>
+    <property name="icon-name">dialog-information</property>
+  </object>
+  <object class="GtkImage" id="image4">
+    <property name="visible">True</property>
+    <property name="can-focus">False</property>
+    <property name="icon-name">applications-other</property>
   </object>
   <object class="GtkWindow" id="tree-window">
     <property name="width-request">1000</property>
@@ -178,6 +183,31 @@ This program is free software: you can redistribute it and/or modify
                         <property name="use-stock">False</property>
                         <property name="always-show-image">True</property>
                         <signal name="activate" handler="on_button_tree_view_clicked" swapped="no"/>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+              </object>
+            </child>
+            <child>
+              <object class="GtkMenuItem">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">_Options</property>
+                <property name="use-underline">True</property>
+                <child type="submenu">
+                  <object class="GtkMenu">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <child>
+                      <object class="GtkImageMenuItem" id="button-tree-mode">
+                        <property name="label" translatable="yes">AVL Balancing (On)</property>
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="image">image4</property>
+                        <property name="use-stock">False</property>
+                        <property name="always-show-image">True</property>
+                        <signal name="activate" handler="on_button_tree_mode_clicked" swapped="no"/>
                       </object>
                     </child>
                   </object>

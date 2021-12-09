@@ -1,3 +1,4 @@
 .vscode/*
 *.glade~
+*.glade#
 btree-view

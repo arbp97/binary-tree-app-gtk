@@ -41,6 +41,7 @@ List *TREE_LIST;
 
 int ROOT_WIDGET_POS_X = INTERNAL_VIEWPORT_POS_X;
 int ROOT_WIDGET_POS_Y = 0;
+bool AVL_BALANCING = true;
 
 int main(int argc, char *argv[])
 {

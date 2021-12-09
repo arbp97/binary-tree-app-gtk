@@ -121,7 +121,8 @@ bool push_node_tree(NodeTree **root, NodeTree *new_node)
 
 	(*root)->height = 1 + fmax(height((*root)->left), height((*root)->right));
 
-	balance(&(*root));
+	if (AVL_BALANCING)
+		balance(&(*root));
 
 	return result;
 }

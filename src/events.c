@@ -275,9 +275,23 @@ void on_button_tree_view_clicked(GtkButton *b)
         console_log("ERROR: no tree selected", TEXT_BUFFER_BOTTOM_LEFT, true);
 }
 
-void on_button_about_clicked(GtkButton *b)
+void on_button_about_clicked(GtkMenuItem *b)
 {
     gtk_widget_show_all(ABOUT_WINDOW);
+}
+
+void on_button_tree_mode_clicked(GtkMenuItem *b)
+{
+    if(AVL_BALANCING)
+    {
+        gtk_menu_item_set_label(b, "AVL Balancing (Off)");
+        AVL_BALANCING = false;
+    }
+    else
+    {
+        gtk_menu_item_set_label(b, "AVL Balancing (On)");
+        AVL_BALANCING = true;
+    }
 }
 
 void on_button_about_close_clicked(GtkButton *b)
