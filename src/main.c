@@ -19,18 +19,8 @@ This program is free software: you can redistribute it and/or modify
 GtkWidget *MAIN_WINDOW;
 GtkWidget *TREE_WINDOW;
 GtkWidget *ABOUT_WINDOW;
-GtkWidget *MAIN_CONTAINER;
-GtkWidget *CONTAINER_TOP_LEFT;
-GtkWidget *CONTAINER_TOP_RIGHT;
-GtkWidget *CONTAINER_BOTTOM_LEFT;
-GtkWidget *CONTAINER_BOTTOM_RIGHT;
-GtkWidget *SCROLL_WINDOW_TOP_LEFT;
-GtkWidget *SCROLL_WINDOW_TOP_RIGHT;
-GtkWidget *VIEWPORT_TOP_LEFT;
-GtkWidget *VIEWPORT_TOP_RIGHT;
 GtkWidget *FIXED_TOP_RIGHT;
 GtkWidget *FIXED_TREE_VIEW;
-GtkWidget *GRID_TOP_LEFT;
 GtkWidget *BUTTON_1;
 GtkWidget *BUTTON_2;
 GtkWidget *BUTTON_3;
@@ -39,13 +29,8 @@ GtkWidget *BUTTON_5;
 GtkWidget *BUTTON_6;
 GtkWidget *BUTTON_7;
 GtkWidget *BUTTON_TREE_VIEW;
-GtkWidget *SPIN_BUTTON_1;
-GtkWidget *SPIN_BUTTON_2;
-GtkWidget *SCROLL_WINDOW_BOTTON_LEFT;
-GtkWidget *SCROLL_WINDOW_BOTTON_RIGHT;
 GtkWidget *VIEWPORT_BOTTOM_RIGHT;
 GtkWidget *LIST_BOTTOM_RIGHT;
-GtkWidget *TEXT_VIEW_BOTTOM_LEFT;
 GtkWidget *TEXT_BUFFER_BOTTOM_LEFT;
 GtkWidget *TEXT_BUFFER_BUTTON_3;
 GtkWidget *TEXT_BUFFER_BUTTON_4;
@@ -79,31 +64,10 @@ int main(int argc, char *argv[])
 
 	/* Getting widgets directly from the layout file w/ the builder */
 
-	MAIN_CONTAINER =
-		GTK_WIDGET(gtk_builder_get_object(BUILDER, "main-container"));
-	CONTAINER_TOP_LEFT =
-		GTK_WIDGET(gtk_builder_get_object(BUILDER, "container-top-left"));
-	CONTAINER_TOP_RIGHT =
-		GTK_WIDGET(gtk_builder_get_object(BUILDER, "container-top-right"));
-	CONTAINER_BOTTOM_LEFT =
-		GTK_WIDGET(gtk_builder_get_object(BUILDER, "container-bottom-left"));
-	CONTAINER_BOTTOM_RIGHT =
-		GTK_WIDGET(gtk_builder_get_object(BUILDER, "container-bottom-right"));
-
-	SCROLL_WINDOW_TOP_LEFT =
-		GTK_WIDGET(gtk_builder_get_object(BUILDER, "scrolled-top-left"));
-	SCROLL_WINDOW_TOP_RIGHT =
-		GTK_WIDGET(gtk_builder_get_object(BUILDER, "scrolled-top-right"));
-	VIEWPORT_TOP_LEFT =
-		GTK_WIDGET(gtk_builder_get_object(BUILDER, "view-top-left"));
-	VIEWPORT_TOP_RIGHT =
-		GTK_WIDGET(gtk_builder_get_object(BUILDER, "view-top-right"));
 	FIXED_TOP_RIGHT =
 		GTK_WIDGET(gtk_builder_get_object(BUILDER, "fixed-top-right"));
 	FIXED_TREE_VIEW =
 		GTK_WIDGET(gtk_builder_get_object(BUILDER, "fixed-tree-view"));
-	GRID_TOP_LEFT =
-		GTK_WIDGET(gtk_builder_get_object(BUILDER, "grid-top-left"));
 
 	BUTTON_1 = GTK_WIDGET(gtk_builder_get_object(BUILDER, "button-1"));
 	BUTTON_2 = GTK_WIDGET(gtk_builder_get_object(BUILDER, "button-2"));
@@ -115,19 +79,10 @@ int main(int argc, char *argv[])
 
 	BUTTON_TREE_VIEW = GTK_WIDGET(gtk_builder_get_object(BUILDER, "button-tree-view"));
 
-	SPIN_BUTTON_1 = GTK_WIDGET(gtk_builder_get_object(BUILDER, "spin-button-1"));
-	SPIN_BUTTON_2 = GTK_WIDGET(gtk_builder_get_object(BUILDER, "spin-button-2"));
-
-	SCROLL_WINDOW_BOTTON_LEFT =
-		GTK_WIDGET(gtk_builder_get_object(BUILDER, "scrolled-bottom-left"));
-	SCROLL_WINDOW_BOTTON_RIGHT =
-		GTK_WIDGET(gtk_builder_get_object(BUILDER, "scrolled-bottom-right"));
 	VIEWPORT_BOTTOM_RIGHT =
 		GTK_WIDGET(gtk_builder_get_object(BUILDER, "view-bottom-right"));
 	LIST_BOTTOM_RIGHT =
 		GTK_WIDGET(gtk_builder_get_object(BUILDER, "list-bottom-right"));
-	TEXT_VIEW_BOTTOM_LEFT =
-		GTK_WIDGET(gtk_builder_get_object(BUILDER, "text-bottom-left"));
 	TEXT_BUFFER_BOTTOM_LEFT =
 		GTK_WIDGET(gtk_builder_get_object(BUILDER, "console-text-buffer"));
 	TEXT_BUFFER_BUTTON_3 =
