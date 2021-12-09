@@ -16,6 +16,7 @@ This program is free software: you can redistribute it and/or modify
 
 #include "tree.h"
 #include "util.h"
+#include "events.h"
 
 Tree *create_tree(int data)
 {
@@ -38,6 +39,8 @@ NodeTree *create_node_tree(int data)
 	char tmp[10];
 	sprintf(tmp, "%i", data);
 	new->widget = gtk_button_new_with_label(tmp);
+
+	g_signal_connect(new->widget, "clicked", G_CALLBACK(on_widget_deleted), NULL);
 
 	return new;
 }
