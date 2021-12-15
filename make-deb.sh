@@ -2,7 +2,7 @@
 
 # This script will create a deb package for btree-view
 
-packageVersion=$(printf "0.1.2" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)")
+packageVersion=$(printf "0.1.3" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)")
 
 # Create file structure
 

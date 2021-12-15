@@ -10,4 +10,4 @@ GenericName=Binary Tree Visualizer
 StartupWMClass=btree-view
 StartupNotify=false
 Categories=Utility;
-Version=0.1.0
+Version=0.1.3
